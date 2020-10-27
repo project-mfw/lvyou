@@ -1,0 +1,469 @@
+@charset "utf-8";
+*{margin: 0;padding: 0;box-sizing: border-box;}
+body{
+	font-size: 14px;
+	font-family: Arial,"Lucida Grande","Microsoft Yahei","Hiragino Sans GB","Hiragino Sans GB W3",SimSun,"PingFang SC",STHeiti;
+	_font-family: Tahoma,Arial,Helvetica,STHeiti;
+	color: #666;
+}
+@mixin flex($a,$b,$c,$d,$e){
+	display:flex;
+	flex-direction: $a;
+	justify-content: $b;
+	align-items: $c;
+	flex-wrap: $d;
+	flex-shrink: $e;
+}
+@mixin core($a,$b,$c,$d,$e){
+	top: $a;right: $b;bottom: $c;left: $d;margin:$e;
+}
+.flex{
+	@include flex(column,space-between,space-around,wrap,0);
+}
+$theme_color:#ff9d00;
+a{
+	text-decoration: none;
+	color: #333333;
+	display: block;
+	.theme_bg_color{
+		background-color: $theme_color;
+	}
+	.theme_font_color{
+		color: $theme_color;
+	}
+	.nav_a{
+		&:focus{
+			color: #fff;
+			background: $theme_color;
+		}
+	}
+}
+ul,ol,li,dl,dd,dt{
+	margin: 0;padding: 0;list-style: none;
+}
+input{
+	border: 0;outline: 0;
+}
+i{display: block;}
+// div{
+// 	border: 1px solid #000000;
+// }
+
+// --------------------------------------------------
+.banner{
+	position: relative;
+	
+	>a:first-child{
+		float: left;
+		z-index: -9999;
+		img{
+			width: 100%;
+		}
+	}
+	// banner标题
+	>a:nth-child(2){
+		position: absolute;
+		top: 25px;right: 0;left: 0;margin: auto;
+		width: 62.5rem;height: 3.75rem;
+		
+		p{
+			font-size: 1.25rem;
+			color: #FFFFFF;
+			text-shadow: 0 1px 3px rgba(0,0,0,.9);
+			span{
+				font-size: 1.875rem;
+			}
+		}
+	}
+	// 首页搜索区域
+	.search_input{
+		position: absolute;
+		bottom: 50px;left: 0;right: 0;
+		width: 39.5rem;
+		background: rgba(0,0,0,.6);
+		margin: auto;
+		padding: 0.625rem;
+		border-radius: 0.25rem;
+		@include flex(column,space-between,flex-start,nowrap,0);
+		// 搜索区多选框
+		ul{
+			@include  flex(row,flex-start,center,no-wrap,0);
+			margin-bottom: 0.4375rem;
+			li{
+				height: 1.625rem;
+				@include flex(row,flex-start,center,no-wrap,0);
+				margin-right: 1.25rem;
+				color: #fff;
+				// 多选框checked样式
+				i{
+					display:inline-block;
+					width: 1rem;height: 1rem;
+					background: url(../../public/img/sprites/header-sprites13.png) no-repeat -60px -110px;
+					margin-right:0.3125rem;
+					cursor: pointer;
+					
+						
+				}
+				.active{
+					background: url(../../public/img/sprites/header-sprites13.png) no-repeat -60px -140px;
+				}
+			}
+			div{
+				width: 100%;
+				background-color: #1493E3;
+				a{
+					width: 2.5rem;height: 2.25rem;
+				}
+			}
+		}
+		
+		>.input_1{
+			width: 100%;
+			@include flex(row,space-between,center,nowrap,0);
+			>input{
+				width:91%;height: 2.875rem;
+				background: #fff;
+				padding: 0 0.625rem 0 1.25rem;
+				border-radius: 4px;
+				font-size: 16px;
+				line-height: 2.875rem;
+			}
+			>a{
+				position: relative;
+				
+				width: 3.125rem;height: 2.875rem;
+				background: $theme_color;
+				border-radius: 4px;
+				>i{
+					position: absolute;
+					@include core(0,0,0,0,auto);
+					width: 1.5rem;height: 1.5rem;
+					background: url(../../public/img/sprites/header-sprites13.png) no-repeat 0px -110px;
+				}
+				
+			}
+		}
+		>.input_2{
+			width: 100%;
+			@include flex(row,n,center,nowrap,0);
+			// 小input样式
+			>input{
+				width: 8.75rem;
+				background: #fff;
+				padding: 0 0.625rem;
+				font-size: 0.875rem;
+				line-height: 2.875rem;
+			}
+			>.input-a{
+				width: 16rem;
+				padding: 0 1.3125rem;
+				margin-right: 6px;
+				font-size: 1rem;
+				border-radius: 0.25rem 0 0 0.25rem;
+			}
+			.sp1,.sp2{
+				position: absolute;
+				z-index: 1;
+				width: 1rem;height: 1rem;
+				background: url(../../public/img/sprites/header-sprites13.png) no-repeat 0 -140px;
+				overflow: hidden;
+			}
+			.sp1{right:228px;};.sp2{right: 85px;}
+			>.input-c{
+				border-radius: 0 .25rem .25rem 0;
+				margin: 0 7px 0 3px;
+			}
+			>a{
+				position: relative;
+				
+				width: 3.125rem;height: 2.875rem;
+				background: $theme_color;
+				border-radius: 4px;
+				>i{
+					position: absolute;
+					@include core(0,0,0,0,auto);
+					width: 1.5rem;height: 1.5rem;
+					background: url(../../public/img/sprites/header-sprites13.png) no-repeat 0px -110px;
+				}
+				
+			}
+		}
+		>.input_3{
+			width: 100%;
+			@include flex(row,space-between,center,nowrap,0);
+			>input{
+				width:91%;height: 2.875rem;
+				background: #fff;
+				padding: 0 0.625rem 0 1.25rem;
+				border-radius: 4px;
+				font-size: 16px;
+				line-height: 2.875rem;
+			}
+			>a{
+				position: relative;
+				
+				width: 3.125rem;height: 2.875rem;
+				background: $theme_color;
+				border-radius: 4px;
+				>i{
+					position: absolute;
+					@include core(0,0,0,0,auto);
+					width: 1.5rem;height: 1.5rem;
+					background: url(../../public/img/sprites/header-sprites13.png) no-repeat 0px -110px;
+				}
+				
+			}
+		}
+	}	
+	// 轮播图左侧缩列图
+	ul:nth-child(4){
+		position: absolute;
+		right: 2.5rem;top: 8%;
+		width: 6.875rem;height: 21.25rem;
+		@include flex(column,space-between,center,nowrap,0);
+		
+		
+		img{width: 6.875rem;height: 62px;}
+	}
+	a:nth-child(5){
+		position: absolute;
+		top:50%;right:2.5rem;
+		width:6.875rem;height: 2.1875rem;
+		margin-top: 10rem;
+		background: url(../../public/img/sprites/index-sprites9.png) no-repeat -3.75rem -3.125rem;
+	}
+	// banner高度坍塌解决
+	&::after{
+		content: "";
+		display: block;
+		clear: both;
+	}
+}
+
+
+// 主页正文部分container
+.container{
+	width: 62.5rem;
+	margin: 0 auto;
+	// border: 1px solid #000000;
+	// 导航栏
+	.nav{
+		width: 100%;
+		margin-bottom: 1.1875rem;
+		@include flex(row,space-between,center,nowrap,0);
+		
+		a{
+			width: 8.5rem;height: 3.5625rem;
+			border: 1px solid #e5e5e5;
+			background: url(../../public/img/sprites/wKgE2l0HSGuAOI1tAAChEE0vNA4603.png) no-repeat 65px -25px;
+			background-size: 104px auto;
+			padding: 0.5rem 0 0 0.4375rem;
+			@include flex(column,n,n,n,0);
+			>div:first-child{
+				height: 1.9375rem;
+				line-height: 1.5625rem;
+				font-size: 16px;
+				font-weight: 600;
+				
+				&:hover{
+					background: url(../../public/img/sprites/下划线.png) no-repeat 4px 20px;
+					background-size:30%;
+				}
+			}
+			>div:last-child{
+				font-size: 12px;
+				color:#9d9d9d;
+				line-height: 5px;
+			}
+		}
+	}
+	
+	// 侧边栏
+	.aside{
+		float: left;
+		width: 16.25rem;
+		// border: 1px solid #1493E3;
+		>a:first-child{
+			width: 100%;height: 1.9375rem;
+			margin-top: 5px;
+			img{
+				width: 13.625rem;height: 1.9375rem;
+			}
+		}
+		.aside_item{
+			margin-bottom:1.875rem;
+			// border: 1px solid #1493E3;
+			.aside_item_hd{
+				width: 16.25rem;height: 2.1875rem;
+				margin-bottom: 0.75rem;
+				@include flex(n,space-between,center,n,0);
+				>a:first-child{
+					font-size: 18px;
+					color: #333333;
+				}
+				>a:nth-child(2){
+					display: inline-block;
+					font-size: 12px;
+					color: #999999;
+				}
+			}
+			>div:nth-child(2){
+				img{width: 100%;}
+				>a:nth-child(2){
+					margin: 10px 0 5px 0;
+					font-size: 16px;
+					color: #333333;
+					&:hover{color: $theme_color; text-decoration: underline;}
+				}
+			}
+		}
+		>div:last-child{
+			>ul>li{
+				height: 1.875rem;
+				font-size: 0.75rem;
+				color: #666666;
+				a{
+					display: inline;
+					margin-left: 0.3125rem;
+					line-height: 1.875rem;
+					&:hover{
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+	}
+
+	// 正文部分
+	.travelnotes{
+		float: right;
+		width: 43.75rem;
+		// border: 1px solid #18656D;
+		@include flex(column,n,center,n,0);
+		// 游记导航栏
+		.tn_nav{
+			width: 100%; height: 4.6875rem;
+			border-bottom: 1px solid #e4e4e4;
+			padding-bottom: 0.5rem;
+			margin-bottom: 1.25rem;
+			@include flex(n,space-between,center,n,0);
+			>ul{
+				@include flex(n,space-between,center,n,0);
+				>li:first-child{
+					width: 10.625rem;height: 2.875rem;
+					padding-bottom: 0.375rem;
+					border-bottom: 3px solid #ff9d00;
+					@include flex(n,center,center,n,0);
+					>a{
+						display: inline;
+						color: $theme_color;
+						font-size: 1.125rem;
+					}
+					>span{
+						height: 1.375rem;
+						margin-left: 0.4375rem;
+						padding: 0 0.625rem 0 0.5rem;
+						border: 1px solid #e5e5e5;
+						@include flex(n,center,center,n,0);
+						>i{
+							width: 0.6875rem;height: 0.5rem;
+							background: url(../../public/img/sprites/index-sprites9.png) no-repeat 0 -8.125rem;
+							margin-right: 0.3125rem;
+						}
+					}
+				}
+				>li:last-child{
+					width: 7.5rem;height: 2.3125rem;
+					text-align: center;
+					font-size: 1.125rem;
+				}
+			}
+			>a{
+				width: 8.75rem;height: 2.25rem;
+				background: $theme_color;
+				border-radius: 0.25rem;
+				font-size: 1rem;
+				color: #FFFFFF;
+				text-align: center;
+				line-height: 2.25rem;
+				@include flex(n,center,center,n,0);
+				>i{
+					width: 1.125rem;height: 1.0625rem;
+					background: url(../../public/img/sprites/index-sprites9.png) no-repeat 0px 0px;
+					margin-right: 5px;
+				}
+			}
+		}
+		// 游记区域
+		.tn_item{
+			width: 100%;
+			// border: 1px solid #000000;
+			margin-bottom: 1.875rem;
+			@include flex(n,space-between,center,n,0);
+			>div:nth-child(2){
+				width: 28.4375rem;
+				>dl{
+					width: 100%;height: 7.3125rem;
+					>dt{
+						width: 26.25rem; height: 1.625rem;
+						margin-bottom: 0.625rem;
+						text-overflow: ellipsis;
+						font-size: 18px;
+						line-height: 1.625rem;
+					}
+					>dd{
+						color: #666666;
+						line-height:1.25rem;
+					}
+				}
+				
+				
+				>div:last-child{
+					position: relative;
+					@include flex(n,n,center,n,0);
+					>span{
+						height:2.0625rem;
+						margin-right:0.625rem;
+						@include flex(n,n,center,n,0);
+						a{color:$theme_color}
+						img{
+							border-radius:50%;
+							margin-right: 0.3125rem;
+						}
+					}
+					>span:first-child{
+						i{
+							width: 0.875rem;height: 1rem;
+							background: url(../../public/img/sprites/index-sprites9.png) no-repeat 0 -50px;
+							margin-right: 0.3125rem;
+						}
+						a{
+							color: #666666 ;
+							&:hover{
+								color: $theme_color;
+								text-decoration: underline;
+							}
+						}
+					}
+					>span:nth-child(3){
+						i{
+							width: 1.125rem;height: 0.875rem;
+							background: url(../../public/img/sprites/index-sprites9.png) no-repeat -30px -50px;
+							margin-right: 0.3125rem;
+						}
+					}
+					>span:last-child{
+						position: absolute;
+						right: 0;
+						>em{color: $theme_color;}
+						>a{
+							width: 2.375rem;height: 2.0625rem;
+							background: url(../../public/img/sprites/index-sprites9.png) no-repeat -60px 0;
+							margin-left: 0.5rem;
+						}
+					}
+				}
+			}
+		}
+	}
+}

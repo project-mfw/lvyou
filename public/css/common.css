@@ -1,0 +1,71 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	/* font-size: 14px; */
+}
+body{
+	font-size: 14px;
+	color: #333333;
+	font-size: 0.875rem;
+	font-family: Arial,"Lucida Grande","Microsoft Yahei","Hiragino Sans GB","Hiragino Sans GB W3",SimSun,"PingFang SC",STHeiti;
+	_font-family: Tahoma,Arial,Helvetica,STHeiti;
+	color: #666;
+	/* line-height: 1.5rem; */
+}
+a{
+	display: inline-block;
+	color: #ff9d00;
+	text-decoration: none;
+}
+input {
+	display: block;
+	border: 0;
+	outline: 0; 
+}
+ul,ol,li,dl,dd,dt{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+i{display:inline-block}
+p,h1,h2,h3,h4,h5,h6{
+	font-weight: normal;
+}
+/* 弹性布局 */
+.flex_row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.flex_column{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+.align_items{
+	align-items: flex-start;
+}
+.wrap{
+	flex-wrap: wrap;
+}
+.center{
+	justify-content: center;
+	margin: 0 auto;
+	text-align: center;
+}
+.text_center{
+	text-align: center;
+}
+/*  */
+.theme_color{
+	color:#ff9d00!important;
+}
+.clear_border{
+		border: none !important;
+}
+.clear_padding{
+		padding: 0 !important;
+}
