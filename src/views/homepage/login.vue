@@ -105,23 +105,28 @@
 			},
 			// 检查手机号格式、是否被注册
 			checkPhone(e){
+				// 首先检测手机号是否输入为空
 				if(this.phone==""){
 					this.phone_tips="注册手机号不能为空"
 				}else{
+					// 其次使用正则对手机号格式进行检测
 					let reg=/^1[3-9]\d{9}$/;
 					if(reg.test(this.phone)){
+						// 如果格式符合则向服务器发送请求
 						this.axios.post( 
 							'/user/regist',
 							`phone=${this.phone}`
 						).then(result=>{
-							console.log(result.data)
+							// 如何返回结果为1则说明该手机号已被注册
 							if(result.data==1){
 								this.phone_tips='手机号已被注册';
 							}else{
+								// 否则成功跳转到注册信息填写界面，并将验证通过的手机号作为参数传递过去
 								this.$router.push({name:"regist",params:{phone:this.phone}})
 							}
 						})
 					}else{
+						// 如果手机号格式不正确，则显示下面信息
 						this.phone_tips='手机号格式不正确'
 					}
 					

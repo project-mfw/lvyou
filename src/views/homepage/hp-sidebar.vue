@@ -132,40 +132,53 @@
 				this.changePic(this.index)
 			},
 			// 轮播图滚动事件
-			// 前往第几张图片，i表示图片的下标
+			// 前往下标为i的图片
 			changePic(i){
+				// 获取到需要滚动的DOM元素item
 				let item=document.getElementsByClassName("item")[0]
-				if(document.getElementsByClassName('item')[0]==undefined){
-					return
-				}
+				// 获取item下的子元素（包含img的元素）
 				let itemChild=document.querySelectorAll('.item>div')[0]
+				// 当找不到itemChild元素的时候,清除定时器并阻止下边代码执行(防止切换到其他页面时报错)
 				if(itemChild==undefined){
-					
 					clearInterval(this.timer)
 					return
 				}
+				// 获取itemChild元素的宽度
 				let itemWidth=itemChild.scrollWidth
+				// 让元素item向左偏移 宽度*张数 就能显示出想显示的那张图片
 				item.style.right=`${itemWidth*i}px`
-				if(i==5 || i==6){
+				// 当前往最后一张图片下标或者大于最后一图片下标的时候，就让第一个圆点使用选中样式
+				if(i==this.result.length-1||i==this.result.length){
 					this.liIndex=0
 				}else{
+					// 其他时候，使用选中样式的小圆点的下标和图片的下标保持一致
 					this.liIndex=i
 				}
-				if(this.index==6){
+				// 当要前往大于最后一图片下标的时候
+				if(this.index==this.result.length){
+					// 先关闭滚动效果，防止出现回滚
 					this.IsTranstion=false;
+					// 再将item元素偏移值清零
 					item.style.right="0px"
+					// 然后将显示的图片下标返回至0
 					this.index=0
 				}
 			}
 		},
 		
 		mounted(){
+			// 页面初始化之后设置定时器图片开始轮播
+			// index中保存将要前往图片的下标，初始值为 0
 			this.timer=setInterval(()=>{
+				// 图片开始轮播后先打开滚动效果
 				if(this.index==1){
 					this.IsTranstion=true
 				}
+				// 然后调用图片轮播的函数
 				this.changePic(this.index)
+				// 函数结束后将index改变为下一张图片的下标
 				this.index++
+				// 然后循环执行，实现轮播效果
 			},2000)
 		},
 		

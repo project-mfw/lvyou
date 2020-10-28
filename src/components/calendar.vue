@@ -25,7 +25,6 @@
 					end:end.getTime()==t.getTime(),
 					between:start.getTime()<t.getTime() && t.getTime()<end.getTime()
 				}"  @click="selectDate($event)" :data-date="t.toLocaleDateString()">{{t.getDate()}}</li>
-				<!-- dark:new Date(end.setMonth(end.getMonth()+1)).getTime()==new Date(t.setMonth(t.getMonth()+1)).getTime() -->
 			</ul>
 		</div>
 		
@@ -59,19 +58,18 @@
 				// 获取绑定在点击元素上的属性值，用'/'切割成数组，使用new Date()重新转换成时间数据
 				let arr=e.target.dataset.date.split("/");
 				let date=new Date(`${arr[0]}/${arr[1]}/${arr[2]}`);
-				// 根据从父组件传递过来的选择，判断使用对应选择模式
-				// 如果为选择开始日期模式
-				console.log(this.pattern)
+				// 根据从父组件传递过来的选择，判断使用哪种模式
+				// 如果选择模式为start时
 				if(this.pattern=="start"){
+					// 当选择开始日期等于当前日期或者小于结束日期时
 					if(this.start.toLocaleDateString()==new Date().toLocaleDateString()||date<this.end){
-						this.$parent.checkedDate=""
 						this.$parent.checkedDate="end";
+						// 将选择的日期保存到变量start中，并通过监听start传递给父组件
 						this.start=date;
 						this.$parent.pattern="end";
-						// console.log('开始时间为'+this.start)
 						// 当用户选择了大于结束日期的开始时间时
 					}else if(date>this.end){
-						// 现将用户选择的开始日期保存
+						// 将选择的日期保存到变量start中，并通过监听start传递给父组件
 						this.start=date;
 						// 重置结束日期为 开始日期后一天的时间
 						this.end=new Date(date.getTime()+24*60*60*1000);
@@ -79,16 +77,16 @@
 						this.$parent.checkedDate="end";
 						this.pattern="end";
 					}
-				// 如果为选择结束日期模式
+				// 如果选择模式为end时
 				}else if(this.pattern=="end"){
-					
+					// 当选择结束日期等于当前日期或者大于开始日期时
 					if(this.end.toLocaleDateString()==new Date().toLocaleDateString()||date>this.start){
+						// 将选择的日期保存到变量end中，并通过监听start传递给父组件
 						this.end=date;
-						// console.log('结束时间为'+this.end)
 						this.$parent.checkedDate="";
 						// 当用户选择了小于开始日期的结束时间时
 					}else if(date<this.start){
-						// 现将用户输入的结束日期保存
+						// 将选择的日期保存到变量end中，并通过监听start传递给父组件
 						this.end=date;
 						// 重置开始日期为 结束日期前一天的时间
 						this.start=new Date(date.getTime()-24*60*60*1000);
@@ -125,22 +123,24 @@
 			getDates(year,month){
 				// 获得当月第一天时间
 				let monthFirstDay=new Date(`${year}-${month}-1`);
+				// 接着获取到这天是周几
 				let week=monthFirstDay.getDay()
-				
+				// getDay()只能得到0~6，为了之后的计算，需要手动将0调整为7
 				if(week==0){
 					week=7
 				}
 				// 计算当月第一天距离第一格的位置
 				let n=week-1;
-				
 				// 获得日历第一格的时间
 				let firstDay=new Date(monthFirstDay.getTime()-n*24*60*60*1000).getTime();
-				// 让第一格的时间累加24小时后，放入数组中。循环41次后返回一个数组
+				// 让第一格的时间累加24小时后，放入数组中。
+				// 因为日历6行7列布局,总共42个格子,所有要循环41次。最后得到一个包含整页日期的数组
 				let arr=[]
 				for(let i=0;i<42;i++){
 					arr[i]=new Date(firstDay);
 					firstDay+=24*60*60*1000;
 				}
+				// 将数组返回出去
 				return arr;
 			}
 		},
@@ -153,13 +153,11 @@
 			}
 		},
 		mounted(){
-			
-			// this.start=this.end=new Date()
 			this.date=new Date();
 			this.nowMonth=new Date().getMonth()+1;
 			this.nowYear=new Date().getFullYear();
 			this.nowDay=new Date();
-			// 日历布局6行7列,总共42个格子
+			
 			// 获得当前月份
 			this.month=new Date().getMonth()+1;
 			// 获得当前年份
@@ -167,11 +165,16 @@
 			// 获得当前日期
 			this.day=new Date().getDate();
 			
-			// 调用函数,输入年、月，输入数组
+			// 调用函数,输入年、月，输出数组保存在变量
+			// 第一页
 			this.dates_1=this.getDates(this.year,this.month);
+			// 第二页
+			// 如果第一页的月份为12月，则第二页年份+1，月份-11
 			if(this.month==12){
 				this.year++;
+				this.month-11;
 			}
+			// 第二页始终为第一页月份的下个月所以要+1
 			this.dates_2=this.getDates(this.year,this.month+1);
 		},
 		

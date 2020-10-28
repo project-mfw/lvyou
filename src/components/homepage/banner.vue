@@ -6,9 +6,7 @@
 			</div>
 			
 		</router-link>
-		<!-- <router-link :to="pics[banner_index].url" >
-			<img :src="pics[banner_index].src" class="banner_pic" @mouseenter.stop="clear" @mouseleave="set">
-		</router-link> -->
+		
 		
 		<router-link :to="pics[banner_index].url" class="title">
 			<p class="date"><span>25</span>/Aug.2020</p>
@@ -95,21 +93,28 @@
 			}
 		},
 		methods:{
+			// 右侧小图手动选择展示的大图
 			switchPic(i){
+				// 设置点击事件将下标传入
 				this.banner_index=i;
 				for(let t of this.pics){
 					t.isChecked=false
 				}
 				this.pics[i].isChecked=true;
 			},
+			// 当鼠标移入/移出轮播图的时候执行的函数
 			clearTimer(){
+				// 调用之后会先做判断,实现一个函数同时实现打开和关闭的操作
 				if(this.timer!=null){
+					// 如果定时器已启动则关闭定时器
 					clearInterval(this.timer)
 					this.timer=null
 				}else{
+					// 如果定时器未启动则打开定时器
 					this.setTimer()
 				}
 			},
+			// 定义的设置定时器的函数
 			setTimer(){
 				this.timer=setInterval(()=>{
 					let nextIndex=this.banner_index+1;
@@ -120,14 +125,13 @@
 				},5000)
 			}
 		},
+		// 初始化页面之后自动调用定时器函数
+		mounted(){
+			this.setTimer()
+		},
 		components:{
 			"search-box":searchBox
 		},
-		mounted(){
-			this.setTimer()
-			
-		}
-		
 	}
 </script>
 

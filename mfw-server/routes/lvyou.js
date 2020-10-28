@@ -216,20 +216,23 @@ r.get('/travel_notes',(req,res)=>{
 	let obj=req.query;
 	let pageSize=Number(obj.pageSize);
 	let start=(Number(obj.page)-1)* pageSize;
-	// 当没有目的地id传入的时候
+	// 当没有目的地id传入的时候，用目的地名称查询
 	if(obj.placeId==""){
 		let sql='select count(*) as count from lv_notes';
+		// 先获取所有数据的个数
 		p.query(sql,(err,count)=>{
 			if(err) throw err;
 			count=count[0].count;
 			let sql=`select * from lv_notes ORDER BY ${obj.collate} DESC limit ?,?`
+			// 再进行分页查询
 			p.query(sql,[start,pageSize],(err,result)=>{
 				if(err) throw err;
+				// 然后将数据总个数以及分页查询到数据返回客户端
 				res.send({result,count})
 				
 			})
 		})
-	// 当有目的地id传入的时候
+	// 当有目的地id传入的时候，用目的地id查询
 	}else{
 		let sql='select count(*) as count from lv_notes where family_id = ?';
 		p.query(sql,[obj.placeId],(err,count)=>{

@@ -181,7 +181,6 @@
 			// 获得当前本地时间
 			getDate(){
 				this.nowDate=new Date().toLocaleDateString();
-				
 			}
 		},
 		watch:{
@@ -198,6 +197,7 @@
 					this.isShowTips=false
 				}
 			},
+			// 用watch监听日历模式的变化，实时将选择的模式传递给对应的日历组件过去
 			pattern(){
 				if(this.pattern=="start"){
 					this.$refs.calendar_1.pattern=this.pattern
@@ -206,7 +206,7 @@
 				}
 				
 			},
-			// 当父组件的日期变化时将新值传入给子组件
+			// 当父组件选择的日期变化的时候将新值传给日历组件中,这样两个日历组件之间的日期时间就互通了
 			startDate(){
 				this.$refs.calendar_1.start=this.startDate
 				this.$refs.calendar_2.start=this.startDate

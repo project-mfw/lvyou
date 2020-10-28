@@ -185,8 +185,7 @@
 		<div class="content">
 			<!--  -->
 			<div class="tn_item" v-for="(t,i) of notes" :key="i">
-				<!-- <img src="/img/homepage/正文游记缩略图.jpg" > -->
-				<!-- <img src="/img/travel_notes/note_2.jpeg" alt=""> -->
+				
 				<div class="left">
 					<img :src="t.pic">
 				</div>
@@ -211,9 +210,9 @@
 		<div class="paging">
 			<ul @click="changeHash('#travelnotes')">
 				<li><span>共{{pageCount}}页/{{count}}条</span></li>
-				<li class="active" @click="prevPage" v-show="page !=1"><a><<上一页</a></li>
+				<li class="active" @click="prevPage" v-show="page !=1"><a>上一页</a></li>
 				<li v-for="i of pageCount" :key="i" :class="{active:page==i}" @click="changePage(i)"><a>{{i}}</a></li>
-				<li class="active" @click="nextPage" v-show="page !=10"><a>下一页</a></li>
+				<li class="active" @click="nextPage" v-show="page != pageCount"><a>下一页</a></li>
 			</ul>
 		</div>
 		
@@ -261,6 +260,7 @@
 					this.screenIsShow=true;
 				}
 			},
+			// 关闭游记分类筛选框
 			screenUp(e){
 				if(e.target.dataset.name=="screenDrop"){
 					this.screenIsShow=false;
@@ -276,15 +276,17 @@
 					this.isDrop="";
 				}
 			},
-			// 
+			// 选择页数
 			changePage(i){
 				this.page=i
 			},
+			// 上一页
 			prevPage(){
 				if(this.page!=0){
 					this.page-=1;
 				}
 			},
+			// 下一页
 			nextPage(){
 				if(this.page!=10){
 					this.page+=1;
@@ -304,6 +306,7 @@
 					this.placeId=result.data[0].id;
 				})
 			},
+			// 获取游记，需要传入的参数目的地id，第几页、每页显示几条数据、以及排序规则。
 			getNotes(placeId,page,pageSize,collate){
 				this.axios.get('/lvyou/travel_notes',{
 					params:{
@@ -313,18 +316,48 @@
 						collate:collate
 					}
 				}).then(result=>{
+					// 获取到总共的数据个数
 					this.count=result.data.count;
+					// 计算出总共的页数
 					this.pageCount=this.count/this.pageSize;
-					for(let i=0;i<result.data.result.length;i++){
-						if(result.data.result[i].family_id=="4"){
-							result.data.result[i].place="东京"
-						}else if(result.data.result[i].family_id=="10"){
-							result.data.result[i].place="三亚"
-						}
-					}
-					this.notes=result.data.result
+					this.notes=[];
+					// 由于游记数据表中缺少目的地信息，所有这里要根据family_id去查询到对应的目的地
+					this.addPlace(result.data.result)
 				})
-			}
+			},
+			// 由于游记数据表中缺少目的地信息，所有这里要根据family_id去查询到对应的目的地
+			addPlace(result){
+				this.axios.get('/lvyou/place_list',{
+					params:{
+						id:result[this.notes.length].family_id
+					}
+				}).then(res=>{
+					// 然后将目的地强插进每一条游记对象中
+					result[this.notes.length].place=res.data[0].place
+					this.notes.splice(this.notes.length,1,result[this.notes.length])
+					// 由于服务器请求速度不一致，所以这里使用了递归，直到完整获取所有响应过来的数据后停止
+					if(this.notes.length<10){
+						this.addPlace(result)
+					}
+				})
+					
+			},
+			// addPlace(result){
+			// 	for(let i=0;i<result.length;i++){
+			// 		this.axios.get('/lvyou/place_list',{
+			// 			params:{
+			// 				id:result[i].family_id
+			// 			}
+			// 		}).then(res=>{
+			// 			// 确保数据请求过来之后再执行下边操作
+			// 			if(res.data[0].place!==""){
+			// 				result[i].place=res.data[0].place
+			// 				this.notes.splice(i,1,result[i])
+			// 			}
+			// 		})
+					
+			// 	}
+			// }
 		},
 		mounted() {
 			// 判断是否使用导航栏
