@@ -27,7 +27,6 @@
 							<li><router-link to="">包车/拼车</router-link></li>
 							<li><router-link to="">WIFI</router-link></li>
 							<li><router-link to="">电话卡</router-link></li>
-							
 						</ul>
 					</div>
 				</li>
@@ -83,14 +82,21 @@
 </template>
 
 <script>
+	// 添加滚动条滚动事件
 	window.addEventListener("scroll",function(){
+		// 添加判断，防止切换到其它页面时寻找不到元素报错
 		if(document.getElementsByClassName("location-1").length!=0){
-			let nav=document.getElementsByClassName("location")[0]
+			// 先获得想要操作的元素
+			let nav=document.getElementsByClassName("location-1")[0]
+			// 然后获得滚动条距离页面顶部的距离
 			let scrollTop=document.body.scrollTop||document.documentElement.scrollTop
+			// 计算出元素距离文档显示区顶部的距离
 			let toTop=nav.offsetTop-scrollTop
 			if(toTop<=0){
+				// 元素距离文档显示区顶部的距离为0时，为元素添加固定样式class
 				nav.nextElementSibling.classList.add("fixed")
 			}else{
+				// 元素距离文档显示区顶部的距离不为0时，移除元素已有的固定样式class
 				nav.nextElementSibling.classList.remove("fixed")
 			}
 		}
