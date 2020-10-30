@@ -54,7 +54,7 @@
 		<div class="order  flex" v-for="(p,index) in hotel_order" :key="index">
 			<div class="process">
 				<ul class="flex">
-					<li>1.选择房间</li>
+					<li><i class="sel"></i> 1.选择房间</li>
 					<li>2.填写入住详情</li>
 					<li>3.确认支付信息</li>
 					<li>4.预订完成</li>
@@ -88,7 +88,7 @@
 								<p>{{p.number}}</p>
 								<p>间</p>
 							</div>
-							<div class="float">如需更改日期或房间数,<br>请在房型选择页修改。 </div>
+							<div class="float" ref="imags">如需更改日期或房间数,<br>请在房型选择页修改。 </div>
 						</div>
 
 					</div>
@@ -103,14 +103,14 @@
 				<div class="order_info border">
 					<div class="top_info">
 						<h4>房间1 - {{p.room_type}} (必填)</h4>
-						<p>入住信息：2成人1张大床或2张单人床</p>
+						<p>入住信息：1成人1张大床或1张单人床</p>
 						<div class="line"></div>
 						<div class="user_info flex4">
 							<div class="input_name">
 								<input type="text" id="x" placeholder="姓" v-model="content" @blur="x" ref="x">													
 							</div>
 							<div class="input_name">
-								<input type="text" v-model="text" id="m" placeholder="名" @blur="m" ref="m">														
+								<input type="text" v-model="text" id="m" placeholder="名" @blur="m" ref="m" >														
 								 <span class="tips_err" v-show="m_f">请填写姓名</span>
 								<span class="tips_success" v-show="m_s">√</span> 									
 							</div>
@@ -123,7 +123,7 @@
 						<!-- 点击添加删除隐藏和显示 -->
 							<div class="user_info flex4" v-show="add">
 							<div class="input_name">
-								<input type="text" id="xx" placeholder="姓" v-model="cont" ref="xx">													
+								<input type="text" id="xx" placeholder="姓" v-model="cont" ref="xx" @blur="xx">													
 							</div>
 							<div class="input_name">
 								<input type="text" v-model="input" id="mm" placeholder="名" @blur="mm" ref="mm">														
@@ -178,9 +178,9 @@
 					<h4>特殊要求</h4><i class="yaoqiu" @click="yaoqiu"></i>
 
 					<div class="room_select" v-show="room">
-						<span class="border5">安静的房间</span>
-						<span class="border5">高楼层</span>
-						<span class="border5">相邻的房间</span>
+						<span class="border5" @click="rooms" ref="span_a" :class="{borders:r}">安静的房间 <i class="rooms" v-show="jing"></i></span>
+						<span class="border5" @click="roomss" ref="span_b" :class="{borders:r2}">高楼层 <i class="rooms" v-show="gao"></i></span>
+						<span class="border5" @click="roomsss" ref="span_c" :class="{borders:r3}">相邻的房间 <i class="rooms" v-show="lin"></i></span>
 					</div>
 					<input class="time border5" v-show="room" placeholder="预计到店时间" ref="time" @click="time">
 					<ul class="times" v-show="timee">
@@ -201,7 +201,7 @@
 				</div>
 				<div class="submit">
 
-					<router-link :to="`/hotel_pay/${p.id}`">提交订单(￥338.00)</router-link>
+					<router-link :to="`/hotel_pay/${p.id}`"><p @click="chuan">提交订单(￥519.00)</p> </router-link>
 
 				</div>
 
@@ -250,12 +250,33 @@
 	</div>
 </template>
 <style scoped>
+.borders{
+	border:1px solid #ff9d00 !important;
+}
 	.hotel_order {
 		font-size: 14px;
 		color: #999;
 		box-sizing: border-box;
 	}
-
+	.rooms{
+		position: absolute;
+		width: 21px;
+		height: 21px;
+		display: inline-block;
+		background: url(/img/i/order.png) no-repeat 0 -70px;
+		vertical-align: middle;
+		right: 0px;
+		bottom:0px;
+	}
+	.sel{
+		width: 18px;
+    height: 18px;
+    vertical-align: -4px;
+    margin-right: 10px;
+    display: inline-block;
+    background: url(/img/i/order.png) no-repeat 0 -50px;
+    vertical-align: middle;
+	}
 	* {
 		margin: 0;
 		padding: 0;
@@ -734,8 +755,11 @@
 		height: 31px;
 		padding: 8px 16px;
 		margin-right: 10px;
+		position: relative;
 	}
-
+	.room_select span:hover{
+		border:1px solid #ff9d00;
+	}
 	.time {
 		width: 370px;
 		height: 31px;
@@ -1002,9 +1026,11 @@
 	export default {
 		data() {
 			return {
-			
-				content: "",
-				text: "",
+				jing:false,
+				gao:false,
+				lin:false,
+				content: '',
+				text: '',
 				usernames: '',
 				phone: '',
 				email: '',
@@ -1036,23 +1062,45 @@
 				mm_f:false,
 				cont:'',
 				input:'',
-				timee:false
+				timee:false,
+				 arr:[],
+				 n:0,
+				 n2:0,
+				 n3:0,
+				 r:false,
+				 r2:false,
+				 r3:false
 			}
 
 		},
 		mounted() {
+		
+			//////////////////////
 			this.id=this.$route.params.id;
-			console.log(this.$route.params)
+			if(this.id!=undefined){
+				console.log(this.id)
 			this.axios.get(`/hotel/hotel_order?id=${this.id}`).then(res => {
 				this.hotel_order=res.data;
-				console.log(this.hotel_order)
 				this.title=this.hotel_order[0].hotel_name;
-				console.log(this.title)				
 				document.title=`${this.title}预订--马蜂窝平台`				
 			})
+			}
+			
 		},
 
-		methods: {			
+		methods: {
+			
+	///////////////
+			getdatas(){
+				this.id=this.$route.params.id;
+			console.log(this.$route.params)
+			this.axios.get(`/hotel/hotel_order?id=${this.id}&arr=${this.arr}`).then(res => {
+				this.hotel_order=res.data.results;
+				console.log(this.hotel_order)
+				this.title=this.hotel_order[0].hotel_name;						
+			})
+			},
+
 			adds(){
 				this.add=true
 				this.nums=false
@@ -1063,20 +1111,21 @@
 
 			},
 			xx(){
-				let xx=this.$refs.m
+				let xx=this.$refs.xx
 				var reg = /^[\u4e00-\u9fa5]{1,5}$/;
-				if (reg.test(this.input) & this.input!='') {
-					this.mm_s = true;
-					this.mm_f = false
+				if (reg.test(this.cont) & this.cont!='') {
+					this.xx_s = true;
+					this.xx_f = false
 					xx[0].style.border="1px solid black"
+				
 				} else {
-					this.mm_f= true;
-					this.mm_s = false
+					this.xx_f= true;
+					this.xx_s = false
 					xx[0].style.border="1px solid red"
 				}
 			},
 			mm(){
-				let mm=this.$refs.m
+				let mm=this.$refs.mm
 				var reg = /^[\u4e00-\u9fa5]{1,5}$/;
 				if (reg.test(this.input) & this.input!='') {
 					this.mm_s = true;
@@ -1089,6 +1138,7 @@
 				}
 			},
 			m(){
+				console.log(this.text)
 				let m=this.$refs.m
 				var reg = /^[\u4e00-\u9fa5]{1,5}$/;
 				if (reg.test(this.text) & this.text!='') {
@@ -1102,6 +1152,7 @@
 				}
 			},
 			x(){
+				console.log(this.content)
 				let x=this.$refs.x
 				var reg = /^[\u4e00-\u9fa5]{1,5}$/;
 				if (reg.test(this.content) & this.content!='') {
@@ -1111,11 +1162,12 @@
 				} else {
 					this.x_f= true;
 					this.x_s = false
-					x.style.border="1px solid red"
+					x[0].style.border="1px solid red"
 				}
 			},
 			//姓名验证
 			names(){
+				console.log(this.usernames)
 				let names=this.$refs.names
 				var reg = /^[\u4e00-\u9fa5]{1,5}$/;
 				if (reg.test(this.usernames) & this.usernames!='') {
@@ -1131,10 +1183,11 @@
 			},
 			//手机号验证
 			phones() {
+				console.log(this.phone)
 					let input=this.$refs.phone
 				var reg=/^1[3-9]\d{9}$/;
 				
-				console.log(reg.test)
+			
 				console.log(this.phone)
 				if (reg.test(this.phone) & this.phone!='') {
 					this.successs=true;
@@ -1147,12 +1200,13 @@
 					this.errs = true
 								
 				input[0].style.border="1px solid red"
-					console.log(this.$refs.phone)
+				
 				}
 			
 			},	
 			//邮箱验证			 
 			emails() {
+				console.log(this.email)
 				let email=this.$refs.email
 				var reg = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
 				if (reg.test(this.email) & this.email != "") {
@@ -1171,6 +1225,43 @@
 			},
 			yaoqiu() {
 				this.room=!this.room
+			},
+			rooms(){
+				 this.jing=!this.jing
+				let a=this.$refs.span_a[0]
+				this.n++
+				if(this.n>0 & this.n%2==0){
+
+					this.r=false
+
+				}else{
+					this.r=true
+				}
+					
+			},
+			roomss(){
+				this.gao=!this.gao
+				let b=this.$refs.span_b[0]
+				this.n2++
+				if(this.n2>0 & this.n2%2==0){
+
+					this.r2=false
+
+				}else{
+					this.r2=true
+				}
+			},
+			roomsss(){
+				this.lin=!this.lin
+				let c=this.$refs.span_c[0]
+				this.n3++
+				if(this.n3>0 & this.n3%2==0){
+
+					this.r3=false
+
+				}else{
+					this.r3=true
+				}				
 			},
 			//备注
 			textarea(){
@@ -1199,6 +1290,14 @@
 				this.timee=false
 
 			},
+			chuan(){
+			
+				
+				this.arr.push(this.usernames,this.phone,this.content,this.text,this.email)
+				console.log(this.arr)
+				this.getdatas()
+
+			}
 
 
 		}

@@ -98,7 +98,7 @@
 						
 					</ul>
 					<div class="all-sc-pic">
-						<router-link :to="`/jd_details/${t.id}`" v-for="(t,i) of label_JD" :key="i"><img :src="t.pic"><p>{{t.name}}</p></router-link>
+						<router-link :to="`/jd_details/${t.id}`" v-for="(t,i) of label_JD" :key="i" v-if="i<15"><img :src="t.pic"><p>{{t.name}}</p></router-link>
 					</div>
 				</div>
 			</div>

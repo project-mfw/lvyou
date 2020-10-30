@@ -17,7 +17,6 @@ import hotel_pay from '../views/hotel/hotel_pay'
 // ================================================================================
 
 // 测试
-import calendar from '../components/calendar.vue'
 import shopping from '../views/search_result/shopping.vue'
 import comment from '../views/comment.vue'
 import jd_map from '../views/scenic_spot/JD_map.vue'
@@ -27,10 +26,6 @@ Vue.use(VueRouter)
 
 const routes = [
 	// 测试
-	{
-		path:'/rili',
-		component:calendar
-	},
 	{
 		path:'/shopping',
 		component:shopping

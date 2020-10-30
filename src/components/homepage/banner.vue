@@ -70,13 +70,13 @@
 						isChecked:false
 					},
 					{
-						src:"/img/homepage/Banner_04.png",
+						src:"/img/homepage/Banner_04.jpg",
 						url:"",
-						title:"这场旅行，起因是块烧饼！| 仙灵缙云，烟火人间",
-						date:"23.sep.2020",
-						author:"libin",
-						destination:"缙云",
-						count:355646,
+						title:"从波西米亚到奥匈帝国，那画面太美我不敢看（漫游布拉格、维也纳、布达佩斯）",
+						date:"30.Oct.2020",
+						author:"行走的丁满",
+						destination:"布拉格",
+						count:137614,
 						isChecked:false
 					},
 					{

@@ -21,16 +21,21 @@
 </template>
 
 <script>
-	
+	// 添加滚动条滚动事件
 	window.addEventListener("scroll",function(){
+		// 添加判断条件，只有查找到按钮元素才执行以下代码（防止切换其他页面后报错）
 		if(document.getElementsByClassName("back_top").length!=0){
+			// 获取按钮元素
 			let box=document.getElementsByClassName("back_top")[0];
 			// 获取滚动条距离页面顶部的距离
 			let scrollTop=document.body.scrollTop || document.documentElement.scrollTop;
+			// 计算按钮元素距离浏览器文档区顶部的距离
 			let topTop=box.offsetTop-scrollTop;
 			if(topTop<=68){
+				// 如果按钮距离浏览器可视窗口顶部距离小于等于68的时候，则显示出来
 				box.firstElementChild.style.display="block"
 			}else{
+				// 如果按钮距离浏览器可视窗口顶部距离大于68时，则显示隐藏
 				box.firstElementChild.style.display="none"
 			}
 			// 获取滚动条距离页面底部的距离
@@ -60,12 +65,17 @@
 			leave(){
 				this.checked=""
 			},
-			// 返回顶部
+			// 返回顶部按钮函数
 			topTop(){
+				// 设置定时器反复让滚动条距窗口顶部的距离减少
 				let timer=setInterval(()=>{
+					// 先获得滚动条距离窗口顶部的距离
 					let scrollTop=document.body.scrollTop || document.documentElement.scrollTop;
-					let speed=Math.floor(-scrollTop/7)
+					// 计算滚动条本次需要移动的距离。由于定时器每执行一次函数scrollTop的值都会变小，所以滚动条滚动的速度会由快到慢变化
+					let speed=Math.floor(-scrollTop/7);
+					// 滚动条原本的距离-本次滚动的距离然后重新赋值，让其移动
 					document.documentElement.scrollTop = document.body.scrollTop =scrollTop+speed;
+					// 当滚动条的距离窗口顶部的距离为0的时候，就清除定时器不再执行代码
 					if(scrollTop==0){
 						clearInterval(timer)
 					}

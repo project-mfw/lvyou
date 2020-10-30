@@ -14,36 +14,39 @@
 					<div>
 						<a class="cut" @click="cut"><i></i></a>
 					</div>
-					<div class="photo_left border">
-						<img :src="p.b_img_one" class="my-big" alt="1">
+					<div class="photo_left">
+						<img :src="this.arrs[0]" class="my-big" alt="1" ref="imgs" data-big="/img/hotel_detail/b2.jpeg">
 						<div class="cover">
-							<a  class="left"><i></i></a>
-							<a class="right"><i></i></a>
+							<a  class="left"></a>
+							<a class="right"></a>
 						</div>
 					</div>
 					<div>
-						<a href="javascript:;" class="btn-up"><i></i></a>
+						<a href="javascript:;" class="btn-up" @click="btn_up"><i></i></a>
 					</div>
 					<div>
-						<a href="javascript:;" class="btn-down"><i></i></a>
+						<a href="javascript:;" class="btn-down" @click="btn_down"><i></i></a>
 
 					</div>
 					<div class="photo_right" @click="right($event)">
 						<ul>
-							<li>
-								<img :src="p.s_img_one" data-target="img/hotel_detail/11.jpeg" class="my-small">
+							<li v-show="first">
+								<img :src="p.s_img_one" data-target="/img/hotel_detail/bg2.jpeg" class="my-small" data-number="one">
 							</li>
 							<li>
-								<img :src="p.s_img_two" data-target="img/hotel_detail/12.jpeg" class="my-small">
+								<img :src="p.s_img_two" data-target="/img/hotel_detail/bg3.jpeg" class="my-small" data-number="two">
 							</li>
 							<li>
-								<img :src="p.s_img_three" data-target="/img/hotel_detail/13.jpeg" class="my-small">
+								<img :src="p.s_img_three" data-target="/img/hotel_detail/bg4.jpeg" class="my-small">
 							</li>
 							<li>
-								<img :src="p.s_img_four" data-target="/img/hotel_detail/14.jpeg" class="my-small">
+								<img :src="p.s_img_four" data-target="/img/hotel_detail/bg5.jpeg" class="my-small">
 							</li>
 							<li>
-								<img :src="p.s_img_five" data-target="/img/hotel_detail/15.jpeg" class="my-small">
+								<img :src="p.s_img_five" data-target="/img/hotel_detail/bg6.jpeg" class="my-small">
+							</li>
+							<li v-show="last">
+								<img :src="p.s_img_six" data-target="/img/hotel_detail/bg7.jpeg" class="my-small">
 							</li>
 						</ul>
 					</div>
@@ -64,9 +67,9 @@
 				</div>
 			</div>		
 			<!-- 	网页头部 -->
-			<div class="">
+			<!-- <div class="">
 				<my-header></my-header>
-			</div>
+			</div> -->
 			<!-- 导航栏 -->	
 			<!-- 搜索区域 -->
 			<div class="top-nav">
@@ -140,6 +143,7 @@
 							<li>
 								<img :src="p.s_img_six">
 							</li>
+							
 						</ul>
 					</div>
 				</div>			
@@ -162,6 +166,7 @@
 					<div class="banner"><img src="/img/banner.png" style="width:100%,margin:40px 0"></div>										
 						<div class="middle_search flex">
 							<div class="go">
+								
 								<input class="start_time border" type="input" @click="showCalendar($event)" data-name="start" v-model="startDate.toLocaleDateString().split('/').join('-')">
 								<div class="_calendar" v-show="checkedDate=='start'">
 									<calendar ref="calendar_1"></calendar>
@@ -176,7 +181,7 @@
 								</div>
 								<i class="rt"></i>
 							</div>
-							<input class="number border" type="text" placeholder="人数未定"><i class="ren"></i>
+							<input class="number border" type="text" placeholder="1成人"><i class="ren"></i>
 							<button class="btn" type="button" @click="prices" ref="button">查看价格</button>
 						</div>
 						<!-- 	中间价格选择 -->					
@@ -218,22 +223,22 @@
 										</div>
 										<div class="yuding flex1">
 											<div class="kuang border" @click="kuang">
-												<span>1</span>
+												<span  ref="number">1</span>
 												<span></span>
-												<span><i class="kuang_number"></i></span>
+												<span><i class="kuang_number" @click="numbers"></i></span>
 											</div>
 											<router-link :to="`/hotel_order/${p.id}`">预定</router-link>
 											<span class="surplus">剩余8间</span>
 											<!-- 隐藏房间数部分 -->
-											<ul class="border select_roomnum" v-if="select_roomnum">
-												<li>1</li>
-												<li>2</li>
-												<li>3</li>
-												<li>4</li>
-												<li>5</li>
-												<li>6</li>
-												<li>7</li>
-												<li>8</li>
+											<ul class="border select_roomnum" v-show="select_num">
+												<li  @click="times($event)" id="1">1</li>
+												<li  @click="times($event)" id="2">2</li>
+												<li  @click="times($event)" id="3">3</li>
+												<li  @click="times($event)" id="4">4</li>
+												<li  @click="times($event)" id="5">5</li>
+												<li  @click="times($event)" id="6">6</li>
+												<li  @click="times($event)" id="7">7</li>
+												<li  @click="times($event)" id="8">8</li>
 											</ul>
 										</div>
 									</div>
@@ -296,7 +301,7 @@
 											<div class="kuang border">
 												<span>1</span>
 												<span></span>
-												<span><i class="kuang_number"></i></span>
+												<span><i class="kuang_number" ></i></span>
 											</div>
 											<router-link to="/hotel_order">预定</router-link>
 											<span class="surplus">剩余8间</span>
@@ -670,9 +675,9 @@
 									</div>
 								</div>							
 					</div>
-					<div class="_footer">
+					<!-- <div class="_footer">
 						<my-footer></my-footer>
-					</div>
+					</div> -->
 				</div>								
 </template>
 <style scoped>
@@ -1177,6 +1182,7 @@
 		width: 680px;
 		height: 380px;
 		border-radius: 4px;
+		cursor: pointer;
 	}
 
 	.left_img {
@@ -1215,6 +1221,7 @@
 		width: 150px;
 		height: 120px;
 		border-radius: 4px;
+		cursor: pointer;
 
 	}
 
@@ -1408,7 +1415,7 @@
 		width: 220px;
 		height: 67px;
 		padding: 15px;
-		position: relative;
+		/* position: relative; */
 	}
 
 	.room_type span {
@@ -1447,7 +1454,7 @@
 	}
 
 	.xianzhi {
-		position: relative;
+		/* position: relative; */
 	}
 
 	.zeng {
@@ -2027,13 +2034,14 @@
 	}
 </style>
 <script>
-import calendar from '../../components/calendar.vue'
+import calendar from '../../components/calendar'
 // 引入酒店地图组件
 import map from '../../components/map.vue'
 	export default {
-		
 		data() {
 			return {
+				first:true,
+				last:false,
 				box: false,
 				heigh: false,
 				traffic: false,
@@ -2046,49 +2054,84 @@ import map from '../../components/map.vue'
 				
 				hotel_detail: [],
 				p:{},
-				id:"",	    		
 				id:this.$route.params.id,
 				places:'三亚',
-					// =======日历========
+				// =======日历========
 				startDate:new Date(),
 				endDate:new Date(new Date().getTime()+24*60*60*1000),
 				checkedDate:"",
 				pattern:"",
-
+				arrs:[],
+				select_num:false
 			}
 		},
-			watch:{
-			checkedDate(){
-				console.log('我改变了，现在是'+this.checkedDate)
-			},
-			pattern(){
-				if(this.pattern=="start"){
-					this.$refs.calendar_1.pattern=this.pattern
-				}else if(this.pattern=="end"){
-					this.$refs.calendar_2.pattern=this.pattern
-				}
-				
-			},
-			// 当父组件的日期变化时将新值传入给子组件
-			startDate(){
-				this.$refs.calendar_1.start=this.startDate
-				this.$refs.calendar_2.start=this.startDate
-			},
-			endDate(){
-				this.$refs.calendar_1.end=this.endDate
-				this.$refs.calendar_2.end=this.endDate
-			}
-		},
+		
+		
 		mounted() {	
-				
-				
+			this.getdata()
+				this.getbig()
 			//酒店详情页接口
-			this.id = this.$route.params.id;
+		
+		},
+		
+		//清楚定时器
+		beforeDestroy(){
+			clearInterval(this.timer)
+		},
+		methods: {
+			numbers(){
+				this.select_num=!this.select_num
+			},
+			times(event){
+				let number=this.$refs.number;
+				console.log(number[0])
+				let li=event.currentTarget
+				console.log(li)
+				number[0].innerText=li.innerText
+				this.select_num=false
+
+			},
+			///////////////////////////////
+			getbig(){
+					this.id = this.$route.params.id;
 			console.log(this.$route.params)
 			this.axios.get(`/hotel/hotel_detail?id=${this.id}`).then(res => {
 				this.hotel_detail = res.data;
 				console.log(this.hotel_detail)
 				 this.p=this.hotel_detail[0]
+				 let a=this.p.b_img_one
+				let b=this.p.b_img_two
+				let c=this.p.b_img_three
+				 let d=this.p.b_img_four
+				let e=this.p.b_img_five
+				let f=this.p.b_img_six
+				 this.arrs.push(a,b,c,d,e,f)
+				 console.log(this.arrs)
+
+				 for(let i=1;i<=this.arrs.length;i++){
+					 var big = document.getElementsByClassName("my-big")[0]
+					 if(i<=this.arrs.length){
+						 i++
+					 }
+				 }						
+			})
+			},
+			//隐藏轮播图
+			btn_down(){
+				this.first=false;
+				this.last=true
+			},
+			btn_up(){
+				this.first=true;
+				this.last=false
+			},		
+			getdata(){
+					this.id = this.$route.params.id;
+			console.log(this.$route.params)
+			this.axios.get(`/hotel/hotel_detail?id=${this.id}`).then(res => {
+				this.hotel_detail = res.data;
+				console.log(this.hotel_detail)
+				 this.p=this.hotel_detail[0]								
 				 let str=this.hotel_detail[0].hotel_name
 				 console.log(str)
 				 this.places=str
@@ -2096,12 +2139,7 @@ import map from '../../components/map.vue'
 
 
 			})
-		},
-		//清楚定时器
-		beforeDestroy(){
-			clearInterval(this.timer)
-		},
-		methods: {
+			},
 			//封装价格查询刷新
 			getprice(){
 				this.timer=setInterval(()=>{
@@ -2114,13 +2152,14 @@ import map from '../../components/map.vue'
 			},
 			prices(){													
 				this.getprice()											
-			},
+			},				
 			// 弹出日历组件
 			showCalendar(e){
-				console.log(111)
+				console.log("弹出日历组件")
 				this.checkedDate=""
 				this.checkedDate=e.target.dataset.name;
 				console.log(this.checkedDate)
+				console.log(e.target.dataset.name)
 				if(this.checkedDate=="start"){
 					this.$refs.calendar_1.pattern=e.target.dataset.name;
 				}else if(this.checkedDate=="end"){
@@ -2154,13 +2193,19 @@ import map from '../../components/map.vue'
 			left_img(){
 				this.box = !this.box;
 			},
+			//右边轮播小图
 			right(e) {
+				this.getdata()
+				let img=this.hotel_detail[0]
+				console.log(img)
+				console.log(img.b_img_one)
 				if (e.target.nodeName == "IMG") {
 					var big = document.getElementsByClassName("my-big")[0]
 					console.log(big)
 					big.setAttribute("src", e.target.getAttribute("data-target"))
-				}
-			},
+					console.log(e.target.path)
+				}				
+			},			
 			room_type() {
 				this.heigh = true
 			},
@@ -2182,6 +2227,28 @@ import map from '../../components/map.vue'
 				this.select_roomnum=!this.select_roomnum
 			},
 	},	
+	watch:{
+			checkedDate(){
+				console.log('我改变了，现在是'+this.checkedDate)
+			},
+			pattern(){
+				if(this.pattern=="start"){
+					this.$refs.calendar_1.pattern=this.pattern
+				}else if(this.pattern=="end"){
+					this.$refs.calendar_2.pattern=this.pattern
+				}
+				
+			},
+			// 当父组件的日期变化时将新值传入给子组件
+			startDate(){
+				this.$refs.calendar_1.start=this.startDate
+				this.$refs.calendar_2.start=this.startDate
+			},
+			endDate(){
+				this.$refs.calendar_1.end=this.endDate
+				this.$refs.calendar_2.end=this.endDate
+		}
+	},
 			components:{
 			"calendar":calendar,
 			"maps":map

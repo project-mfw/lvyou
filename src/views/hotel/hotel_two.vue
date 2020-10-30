@@ -2,9 +2,9 @@
 	<div class="hotel_two">
 		
 		<!-- 页头 -->
-		<div class="header flex border">
+		<!-- <div class="header flex border">
 			<my-header></my-header>
-		</div>
+		</div> -->
 		<!-- 网页主要内容 -->
 			<!-- 搜索区域 -->
 			<div class="top-nav flex">
@@ -133,7 +133,7 @@
 				<div class="bottom-one">
 					<ul class=" ul flex">
 						<a class="first">全部</a>
-						<a  @click="hong">网红酒店</a>
+						<a >网红酒店</a>
 						<a >人均300起睡好房</a>
 						<a >购物天堂</a>
 						<a >亲子酒店</a>
@@ -307,9 +307,9 @@
 			<a>马蜂窝酒店平台合作伙伴</a>
 		</div>
 		</div>
-		<div class="_footer">
+		<!-- <div class="_footer">
 			<my-footer></my-footer>
-		</div>
+		</div> -->
 	</div>	
 </template>
 <style scoped>
@@ -1260,7 +1260,7 @@
 	}
 </style>
 <script>
-import calendar from '../../components/calendar.vue'
+import calendar from '../../components/calendar'
 import little_map from '../../components/little_map.vue'
 	export default {
 		data() {
@@ -1279,7 +1279,7 @@ import little_map from '../../components/little_map.vue'
 				page: 1,
 				offset: 1,
 				pagecount:'',
-				id: "",
+				// id: "",
 				id:this.$route.params.id,
 				p:{},
 				isdisable:false,
@@ -1303,7 +1303,6 @@ import little_map from '../../components/little_map.vue'
 		watch:{
 			range(){
 				this.price=this.range*40
-				console.log(this.price)
 			},
 			
 			checkedDate(){
@@ -1329,22 +1328,22 @@ import little_map from '../../components/little_map.vue'
 		},
 		
 		mounted() {
-			// this.getdata()
+			this.getdata()
+			// console.log(this.$route.query)
+			// this.id=this.$route.parmas.id
+
 			this.kw=this.$route.query.place
 		},
 		watch:{
-			kw(){
-				console.log(111)
-				this.getcountry()
-			}
+			// kw(){
+			// 	this.getcountry()
+			// }
 		},
 		methods: {
 			// 弹出日历组件
 			showCalendar(e){
-				console.log(111)
 				this.checkedDate=""
 				this.checkedDate=e.target.dataset.name;
-				console.log(this.checkedDate)
 				if(this.checkedDate=="start"){
 					this.$refs.calendar_1.pattern=e.target.dataset.name;
 				}else if(this.checkedDate=="end"){
@@ -1356,33 +1355,7 @@ import little_map from '../../components/little_map.vue'
 				if(this.checkedDate=="end"){
 					this.checkedDate=end
 				}
-			},
-			hong(){
-				this.gethong()
-			},
-			//酒店类型
-			gethong(){
-					this.id=this.$route.params.id;
-				console.log(this.$route.params);
-				this.axios.get(`/hotel/all_hotel?id=${this.id}&page=${this.page}`).then(res => {
-				console.log(res.data.results)
-			
-				this.pagecount = res.data.pagecount							
-				this.p=this.all_hotel[0]								
-				let hong=res.data.results;				
-    			hong.forEach(ele => {
-				let a=ele.type	
-															
-				});			
-				if(this.a=='网红酒店'){
-					hong.sort((a,b)=>{
-					return a.type-b.type
-				})
-						
-				}
-							  
-			})		
-			},
+			},						
 			country(){
 				if(this.kw!=''){
 					this.getcountry()
@@ -1392,23 +1365,24 @@ import little_map from '../../components/little_map.vue'
 			getcountry(){				
 					this.axios.get(`/hotel/search/${this.kw}`).then(res=>{										
 					this.results=res.data;
-					console.log(this.results)
 					let fid									
 					this.results.forEach(ele=>{
 						fid=ele.fid;
-						console.log(fid)
 					})
-					console.log(this.id)
 					if(fid==this.id){																						
 						this.all_hotel=this.results	
-						// location.reload()																																	
+						location.reload()																																	
 					}else{
 						//跳转对应页面
 						this.id=fid
-						this.$router.push(`/hotel_two/${this.id}`)					
-						// location.reload()
-						this.kw=this.$refs.countrys.innerHTML
-						console.log(this.kw)
+						if(this.id==undefined){
+							console.log("id未定义")
+						}else{
+							this.$router.push(`/hotel_two/${this.id}`)	
+						}
+						// this.$router.push({path:'/hotel_two',name:'hotel_two',params:{id:this.id}})	
+
+					
 					}			
 				})
 			},		
@@ -1428,7 +1402,6 @@ import little_map from '../../components/little_map.vue'
 			forsearch(){
 				this.axios.get(`/hotel/search/${this.kw}`).then(res=>{										
 					this.results=res.data;
-					console.log(this.results)
 					let fid									
 					this.results.forEach(ele=>{
 						fid=ele.fid;
@@ -1436,7 +1409,6 @@ import little_map from '../../components/little_map.vue'
 						let type=ele.type
 						console.log(type)
 					})
-					console.log(fid,this.id)
 					if(fid==this.id){																						
 						this.all_hotel=this.results	
 						console.log(this.all_hotel)
@@ -1458,6 +1430,7 @@ import little_map from '../../components/little_map.vue'
 				}							
 			},
 			diss(){
+				console.log(`我执行了`)
 				let input=document.querySelector('.b-o5 input')				
 				if(input.value!=''){
 					this.getdata()
@@ -1475,9 +1448,7 @@ import little_map from '../../components/little_map.vue'
 			},
 			getdata(){
 				this.id=this.$route.params.id;
-				console.log(this.id);
 				this.axios.get(`/hotel/all_hotel?id=${this.id}&page=${this.page}`).then(res => {
-				console.log(res.data.results)
 				this.all_hotel = res.data.results;
 				this.pagecount = res.data.pagecount							
 				this.p=this.all_hotel[0]
@@ -1493,7 +1464,6 @@ import little_map from '../../components/little_map.vue'
 			orderdata(){
 				this.id=this.$route.params.id;			
 				this.axios.get(`/hotel/all_hotel?id=${this.id}&page=${this.page}`).then(res => {
-				console.log(res.data.results)
 				this.all_hotel = res.data.results;
 				this.pagecount = res.data.pagecount							
 				this.p=this.all_hotel[0]								
@@ -1509,22 +1479,19 @@ import little_map from '../../components/little_map.vue'
 			//升序
 			desdata(){
 				this.id=this.$route.params.id;
-				console.log(this.$route.params);
 				this.axios.get(`/hotel/all_hotel?id=${this.id}&page=${this.page}`).then(res => {
-				console.log(res.data.results)
-				this.all_hotel = res.data.results;
-				this.pagecount = res.data.pagecount							
-				this.p=this.all_hotel[0]								
-				let order=res.data.results;				
-    			order.forEach(ele => {
-				let a=ele.price_a											
-				});			
-				order.sort((a,b)=>{
-					return b.price_a-a.price_a
+					console.log(res.data.results)
+					this.all_hotel = res.data.results;
+					this.pagecount = res.data.pagecount							
+					this.p=this.all_hotel[0]								
+					let order=res.data.results;				
+					order.forEach(ele => {
+					let a=ele.price_a											
+					});			
+					order.sort((a,b)=>{
+						return b.price_a-a.price_a
+					})
 				})
-				
-							
-			})
 			},
 			getplace(str){			
 				this.place=str.slice(0,2)
@@ -1534,7 +1501,6 @@ import little_map from '../../components/little_map.vue'
 			nextpage(index) {											
 				 this.getdata()
 				this.page=index+1
-				console.log(this.page)																											
 			},
 			next(page){
 				this.getdata()

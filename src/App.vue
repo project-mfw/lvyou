@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view :key="key"></router-view>
+	<back-top></back-top>
   </div>
 </template>
 
@@ -18,5 +19,7 @@
 	
 </script>
 <style>
-	
+	#app{
+		position: relative;
+	}
 </style>

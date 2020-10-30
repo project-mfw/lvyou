@@ -690,7 +690,7 @@
 		
 </style>
 <script>
-import calendar from '../components/calendar.vue'
+// import calendar from '../components/calendar'
     export default{
 		data(){
 			return{

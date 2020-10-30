@@ -17,7 +17,7 @@
 				<div class="message_one">
 					<i></i>
 					<span>您的订单提交成功！</span>
-					<span>支付剩余时间：<strong>{{hr}}</strong>小时<strong>{{min}}</strong>分<strong>{{sec}}</strong>秒，超时则订单关闭</span>
+					<span>支付剩余时间<strong>{{min}}</strong>分<strong>{{sec}}</strong>秒，超时则订单关闭</span>
 				</div>
 				<div class="message_two">
 					<span>订单号：</span>
@@ -36,8 +36,8 @@
 				<div class="hotel_title">
 					<i></i>
 					<div>
-						<h2>三亚哈曼度假酒店(Harman Hotel Sanya)</h2>
-						<p>地址：大东海旅游度假区榆亚路136号 136 Yuya Road, Jiyang District </p>
+						<h2>三亚哈曼度假酒店</h2>
+						<p>地址：大东海旅游度假区榆亚路136号</p>
 					</div>
 				</div>
 				<div class="message_main border4">
@@ -45,11 +45,11 @@
 						<ul class="message_left">
 							<li>
 								<span>入住时间：</span>
-								<span class="dt">2020年10月15日 星期四</span>
+								<span class="dt">2020年11月11日 星期三</span>
 							</li>
 							<li>
 								<span>退房时间:</span>
-								<span class="dt">2020年10月16日 星期五</span>
+								<span class="dt">2020年11月12日 星期四</span>
 							</li>
 							<li>
 								<span>房型：</span>
@@ -65,7 +65,7 @@
 							</li>
 							<li>
 								<span>入住人数：</span>
-								<span>共2成人</span>
+								<span>共1成人</span>
 							</li>
 							<li>
 								<span>入住人：</span>
@@ -73,17 +73,17 @@
 							</li>
 							<li>
 								<span>床型：</span>
-								<span>1张大床或2张单人床X1</span>
+								<span>1张大床或1张单人床X1</span>
 							</li>
 						</ul>
 						<ul class="message_right">
 							<li>
 								<span>手机：</span>
-								<span>13888888888</span>
+								<span>13666666666</span>
 							</li>
 							<li>
 								<span>邮箱</span>
-								<span>1366@qq.com</span>
+								<span>104@qq.com</span>
 							</li>
 						</ul>
 					</div>
@@ -498,12 +498,15 @@
 				min: 59,
 				sec: 59,
 				hr: 24,
-				// id:'',
-
+				id:0,
+				hotel_detail:[],
+				p:[],
+				
 
 			}
 		},
 		mounted() {
+				// this.getdata()
 			// this.id=this.$route.params.id;
 			// console.log(this.$route.params.id)
 			// this.axios.get(`/hotel_pay?id=${this.id}`).then(res=>{
@@ -511,8 +514,39 @@
 			// 	console.log(res.data)
 			// })
 			this.countdown()
+			// this.getdatas()
 		},
 		methods: {
+			//接收上个页面input传过来的数据
+			// getdatas(){
+			// 	this.id=this.$route.params.id;
+			// console.log(this.$route.params.id)
+			// this.axios.get(`/hotel/hotel_order?id=${this.id}`).then(res => {
+			// 	this.hotel_order=res.data;
+			// 	console.log(this.hotel_order)
+			// 	this.title=this.hotel_order[0].hotel_name;	
+			// 	let arrs=res.data.arr;
+			// 	console.log(arrs)					
+			// })
+			// },
+			//封装接口
+			// 	getdata(){
+			// this.id = this.$route.params.id;
+			// console.log(this.$route.params)
+			// this.axios.get(`/hotel/hotel_pay?id=${this.id}`).then(res => {
+			// 	this.hotel_detail = res.data;
+			// 	console.log(this.hotel_detail)
+			// 	 this.p=this.hotel_detail[0]
+			// 	//  this.p.forEach(element => {
+			// 	// 	this.a=element.hotel_name
+			// 	// 	this.b=element.hotel_uname
+			// 	// 	this.c=element.adress
+
+			// 	//  });
+					
+				
+			// })
+			// },
 			z() {
 				this.zfb = true;
 				this.jd = false;
@@ -539,7 +573,7 @@
 				let hr = parseInt(count / 60 / 60 % 24)
 				let min = parseInt(count / 60 % 60)
 				let sec = parseInt(count % 60)
-				this.hr = hr > 9 ? hr : '0' + hr
+				// this.hr = hr > 9 ? hr : '0' + hr
 				this.min = min > 9 ? min : '0' + min
 				this.sec = sec > 9 ? sec : '0' + sec
 				const that = this

@@ -27,7 +27,6 @@
 				}"  @click="selectDate($event)" :data-date="t.toLocaleDateString()">{{t.getDate()}}</li>
 			</ul>
 		</div>
-		
 	</div>
 </template>
 
@@ -146,7 +145,9 @@
 		},
 		watch:{
 			start(){
+				console.log(this.$parent.startDate)
 				this.$parent.startDate=this.start
+				console.log(this.$parent.startDate)
 			},
 			end(){
 				this.$parent.endDate=this.end
@@ -197,6 +198,7 @@
 	}
 	.calendar>div{
 		float: left;
+		z-index: 999;
 		width: 49.9%;height: 100%;
 		padding: 10px;
 		text-align: center;

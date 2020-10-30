@@ -1,8 +1,8 @@
 <template>
   <div class="hotel" >
-	  <div class="_header">
+	  <!-- <div class="_header">
 		  <my-header></my-header>
-	  </div>
+	  </div> -->
       <div class="main flex">
 			<!-- 第一部分 -->
 			<div class="one">
@@ -16,7 +16,7 @@
 								<a id="sanya" @click="san($event)">三亚</a>
 								<a id="bei" @click="san($event)">北京</a>
 								<a>台北</a>
-								<router-link to="">香港</router-link>
+								<a>香港</a>
 								<router-link to="">垦丁</router-link>
 								<router-link to="">花莲</router-link>
 								<router-link to="">重庆</router-link>
@@ -190,7 +190,7 @@
 					<a @click="zhuti('5')" id="5">目的地特色</a>
 					<a @click="zhuti('6')" id="6">浪漫花海</a>					
 					<ul class="t_img flex" v-show="one"  v-for="(p,index) in theme_details" :key="index">
-						<router-link :to="`/hotel_two/${p.id}`" class="imgzt11">
+						<router-link :to="{name:'hotel_two',params:{id:p.id}}" class="imgzt11">
 						<div>
 						<div class="yy" >
 							<img :src="p.img">
@@ -227,9 +227,9 @@
 						
 			</div>
 	    </div>
-		<div class="_footer">
+		<!-- <div class="_footer">
 			<my-footer></my-footer>
-		</div>
+		</div> -->
   </div>
 </template>
 <style scoped>
@@ -464,6 +464,7 @@
 		font-size:14px;
 		padding-left: 10px;
 		outline:none;
+		color:#999;
 	}
 	.rq{
 		width:16px;
@@ -561,8 +562,7 @@
 		.t_img .imgzt11,.imgzt12,.imgzt13,.imgzt14,.imgzt15,.imgzt16{
 			 background-size:318px 240px;
 			 width: 318px;
-			 height:240px;
-			 margin-top:10px;
+			 height:240px;			
 			 margin-bottom:10px;
 			 
 		}
@@ -582,14 +582,14 @@
 		.yy{
 				
 				background:#000;
-				width:318px;
+				width:320px;
 				height:240px;
 				z-index:0;
 				
 		}
 		.yy img{
 				background:#000;
-				width:318px;
+				width:320px;
 				height:240px;
 				background-size: 100%;
 				z-index:5;
@@ -609,12 +609,12 @@
 				width: 100%;
 			}
 			.three a{
-				width: 16.66%;
+				width: 16.60%;
 				height: 50px;
 				line-height: 50px;
 				font-size:18px;
 				color: #666;
-				margin-top: 10px;
+				margin-bottom:15px;
 				border-bottom:1px solid #e4e4e4;
 				text-align: center;
 			}
@@ -674,11 +674,13 @@
 			.four a div p{
 				font-size:13px;
 				width:225px;
+				
 			}
 	
 			.four .nav{
 				width:16.66%;
 				height:50px;
+				line-height:50px;
 				margin-bottom:15px;
 				border-bottom:1px solid #e4e4e4;
 				text-align: center;
@@ -693,7 +695,7 @@
 		
 </style>
 <script>
-import calendar from '../../components/calendar.vue'
+import calendar from '../../components/calendar'
     export default{
 		data(){
 			return{
@@ -772,19 +774,20 @@ import calendar from '../../components/calendar.vue'
 				}
 			},
 		zhuti(id){
-					
+			this.page=Number(id)
+			console.log(this.page)
 		 this.axios.get('/hotel/theme_details?page='+this.page).then(res=>{
+			//  console.log(11111)
 				this.theme_details=res.data.results;											
-				console.log(this.theme_details)
-				this.page=Number(id)
-				console.log(this.page)
-				
+				console.log(this.theme_details)		
 			});	
 			
 			
 			
 		},
 		tejia(id){
+			this.pages=Number(id)
+			console.log(this.pages)	
 			//配置特价酒店详情
 		this.axios.get('/hotel/special_details?pages='+this.pages).then(res=>{
 			console.log(0)
@@ -799,14 +802,11 @@ import calendar from '../../components/calendar.vue'
 				},			
 			san(event){	
 				let span=event.currentTarget;
-				console.log(span)	
-				this.search=span.innerHTML									
-				// let jing=document.getElementById('jing')
-				// let sanya=document.getElementById('sanya')							
-				// this.search=jing.innerHTML;
-				// this.search=sanya.innerHTML;
-				console.log(this.search)			
-				// this.$router.push(`/hotel_two/${p.id}`)			
+				console.log(span)					
+				this.search=span.innerHTML													
+				console.log(this.search)
+						
+						
 			},
 			
 			qinzi(){
