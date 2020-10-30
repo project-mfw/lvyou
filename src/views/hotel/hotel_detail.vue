@@ -67,9 +67,9 @@
 				</div>
 			</div>		
 			<!-- 	网页头部 -->
-			<!-- <div class="">
+			<div class="">
 				<my-header></my-header>
-			</div> -->
+			</div>
 			<!-- 导航栏 -->	
 			<!-- 搜索区域 -->
 			<div class="top-nav">
@@ -167,7 +167,7 @@
 						<div class="middle_search flex">
 							<div class="go">
 								
-								<input class="start_time border" type="input" @click="showCalendar($event)" data-name="start" v-model="startDate.toLocaleDateString().split('/').join('-')">
+								<input class="start_time border" type="text" @focus="showCalendar($event)" data-name="start" v-model="startDate.toLocaleDateString().split('/').join('-')">
 								<div class="_calendar" v-show="checkedDate=='start'">
 									<calendar ref="calendar_1"></calendar>
 								</div>
@@ -175,7 +175,7 @@
 							</div>
 							<div class="s_img"></div>
 							<div class="back">
-								<input class="leave_time border" type="input" @click="showCalendar($event)" @blur="change" data-name="end" v-model="endDate.toLocaleDateString().split('/').join('-')">
+								<input class="leave_time border" type="text" @focus="showCalendar($event)" data-name="end" v-model="endDate.toLocaleDateString().split('/').join('-')">
 								<div class="_calendar" v-show="checkedDate=='end'">
 									<calendar ref="calendar_2"></calendar>
 								</div>
@@ -258,7 +258,7 @@
 											</li>
 										</ul>
 										<div class="room_price">
-											<strong>{{p.price_b}}</strong>
+											<strong>￥560</strong>
 											<i>(已含税)</i>
 										</div>
 										<div class="yuding flex1">
@@ -320,7 +320,7 @@
 
 										</ul>
 										<div class="room_price">
-											<strong>{{p.price_d}}</strong>
+											<strong>￥489</strong>
 											<i>(已含税)</i>
 										</div>
 										<div class="yuding flex1">
@@ -675,9 +675,7 @@
 									</div>
 								</div>							
 					</div>
-					<!-- <div class="_footer">
-						<my-footer></my-footer>
-					</div> -->
+					<my-footer></my-footer>
 				</div>								
 </template>
 <style scoped>
@@ -1339,7 +1337,11 @@
 		box-shadow: 0 0 1px 1px #FF9D00;
 		border:0;
 	}
-
+	.comment_detail::after{
+		content: '';
+		display: block;
+		clear: both;
+	}
 	.btn {
 		background-color: #FF9D00;
 		color: #fff;
@@ -1423,7 +1425,7 @@
 	}
 
 	.point {
-		position: absolute;
+		/* position: absolute; */
 		margin: 4px 5px 5px 0;
 		border-left: 4px solid #ffa800;
 		border-top: 4px dashed transparent;
@@ -2034,7 +2036,6 @@
 	}
 </style>
 <script>
-import calendar from '../../components/calendar'
 // 引入酒店地图组件
 import map from '../../components/map.vue'
 	export default {
@@ -2084,9 +2085,7 @@ import map from '../../components/map.vue'
 			},
 			times(event){
 				let number=this.$refs.number;
-				console.log(number[0])
 				let li=event.currentTarget
-				console.log(li)
 				number[0].innerText=li.innerText
 				this.select_num=false
 
@@ -2094,10 +2093,8 @@ import map from '../../components/map.vue'
 			///////////////////////////////
 			getbig(){
 					this.id = this.$route.params.id;
-			console.log(this.$route.params)
 			this.axios.get(`/hotel/hotel_detail?id=${this.id}`).then(res => {
 				this.hotel_detail = res.data;
-				console.log(this.hotel_detail)
 				 this.p=this.hotel_detail[0]
 				 let a=this.p.b_img_one
 				let b=this.p.b_img_two
@@ -2106,7 +2103,6 @@ import map from '../../components/map.vue'
 				let e=this.p.b_img_five
 				let f=this.p.b_img_six
 				 this.arrs.push(a,b,c,d,e,f)
-				 console.log(this.arrs)
 
 				 for(let i=1;i<=this.arrs.length;i++){
 					 var big = document.getElementsByClassName("my-big")[0]
@@ -2127,13 +2123,10 @@ import map from '../../components/map.vue'
 			},		
 			getdata(){
 					this.id = this.$route.params.id;
-			console.log(this.$route.params)
 			this.axios.get(`/hotel/hotel_detail?id=${this.id}`).then(res => {
 				this.hotel_detail = res.data;
-				console.log(this.hotel_detail)
 				 this.p=this.hotel_detail[0]								
 				 let str=this.hotel_detail[0].hotel_name
-				 console.log(str)
 				 this.places=str
 			document.title=`${this.places}预订`
 
@@ -2144,7 +2137,6 @@ import map from '../../components/map.vue'
 			getprice(){
 				this.timer=setInterval(()=>{
 					this.id = this.$route.params.id;
-					console.log(this.$route.params)
 					this.axios.get(`/hotel/hotel_detail?id=${this.id}`).then(res => {
 						this.hotel_detail = res.data;						
 					})
@@ -2153,24 +2145,25 @@ import map from '../../components/map.vue'
 			prices(){													
 				this.getprice()											
 			},				
+			// 日历
 			// 弹出日历组件
 			showCalendar(e){
-				console.log("弹出日历组件")
 				this.checkedDate=""
 				this.checkedDate=e.target.dataset.name;
-				console.log(this.checkedDate)
-				console.log(e.target.dataset.name)
 				if(this.checkedDate=="start"){
 					this.$refs.calendar_1.pattern=e.target.dataset.name;
 				}else if(this.checkedDate=="end"){
 					this.$refs.calendar_2.pattern=e.target.dataset.name;
 				}
-			},			
-			change(e){
-				if(this.checkedDate=="end"){
-					this.checkedDate=end
+			},
+			
+			closeCalendar(e){
+				console.log(e.target.className)
+				if(e.target.className!="_calendar"){
+					this.checkedDate=""
 				}
-			},			
+			},
+			// ================================================
 			go() {
 				this.hotel = true;
 			},
@@ -2197,13 +2190,9 @@ import map from '../../components/map.vue'
 			right(e) {
 				this.getdata()
 				let img=this.hotel_detail[0]
-				console.log(img)
-				console.log(img.b_img_one)
 				if (e.target.nodeName == "IMG") {
 					var big = document.getElementsByClassName("my-big")[0]
-					console.log(big)
 					big.setAttribute("src", e.target.getAttribute("data-target"))
-					console.log(e.target.path)
 				}				
 			},			
 			room_type() {
@@ -2250,8 +2239,7 @@ import map from '../../components/map.vue'
 		}
 	},
 			components:{
-			"calendar":calendar,
-			"maps":map
+				"maps":map
 			}
 		
 	}

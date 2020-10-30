@@ -95,7 +95,6 @@
 		},
 		mounted(){
 			let id=window.localStorage.getItem('userId');
-			console.log(id)
 			if(id!=null && id!=""){
 				this.isLogin=true;
 				this.axios.get('/user/check_user',{
@@ -114,8 +113,6 @@
 			}else{
 				this.isLogin=false;
 			}
-			
-			// this.isLogin= this.$store.state.isLogin;
 		}
 	}
 </script>

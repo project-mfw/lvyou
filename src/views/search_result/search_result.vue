@@ -116,7 +116,6 @@
 						placeId:this.placeId
 					}
 				}).then(result=>{
-					console.log(result.data)
 					this.hotel=result.data
 				})
 			}

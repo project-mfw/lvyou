@@ -1,8 +1,9 @@
 <template>
 	<div class="hotel_pay">
+		
 		<div class="header">
 			<div class="nav">
-				<a href="">蓝梦</a>
+				<a href="">{{nickName}}</a>
 				<span>|</span>
 				<a>我的订单</a>
 			</div>
@@ -45,11 +46,11 @@
 						<ul class="message_left">
 							<li>
 								<span>入住时间：</span>
-								<span class="dt">2020年11月11日 星期三</span>
+								<span class="dt">2020年11月21日 星期六</span>
 							</li>
 							<li>
 								<span>退房时间:</span>
-								<span class="dt">2020年11月12日 星期四</span>
+								<span class="dt">2020年11月22日 星期日</span>
 							</li>
 							<li>
 								<span>房型：</span>
@@ -121,6 +122,7 @@
 
 
 		</div>
+		
 	</div>
 </template>
 
@@ -479,14 +481,7 @@
 		margin-bottom: 5px;
 		border-color: transparent;
 	}
-
-	/* .some_pay a :nth-child(2){
-	width:20px;
-	height:20px;
-	display: inline-block;
-	vertical-align:middle;
-	border:1px solid #999;
-} */
+	
 </style>
 <script>
 	export default {
@@ -501,11 +496,14 @@
 				id:0,
 				hotel_detail:[],
 				p:[],
+				nickName:""
 				
 
 			}
 		},
 		mounted() {
+			console.log(this.$store.state)
+			this.nickName=this.$store.state.nickName
 				// this.getdata()
 			// this.id=this.$route.params.id;
 			// console.log(this.$route.params.id)
@@ -514,6 +512,7 @@
 			// 	console.log(res.data)
 			// })
 			this.countdown()
+			// location.reload()
 			// this.getdatas()
 		},
 		methods: {
@@ -566,7 +565,7 @@
 				alert("支付成功")
 			},
 			countdown() {
-				let end = Date.parse(new Date('2020-11-01 11:30:30'))
+				let end = Date.parse(new Date('2020-11-1 16:30:30'))
 				let now = Date.parse(new Date())
 				let count = (end - now) / 1000 //转换为秒
 				if (count < 0) return;

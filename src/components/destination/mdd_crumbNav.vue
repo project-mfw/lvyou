@@ -114,6 +114,9 @@
 						id:placeId
 					}
 				}).then(result=>{
+					if(result.data[0]==undefined){
+						return
+					}
 					if(result.data[0].family_id!=0){
 						this.city=result.data[0].place
 						this.$parent.place=result.data[0].place

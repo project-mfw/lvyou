@@ -115,7 +115,6 @@
 						id:this.placeId
 					}
 				}).then(result=>{
-					console.log(result.data)
 					this.scenicSpot=result.data;
 					this.$parent.scenicSpot=result.data;
 				})
@@ -125,7 +124,6 @@
 						id:this.placeId
 					}
 				}).then(result=>{
-					// console.log(result.data)
 					this.play=result.data;
 				})
 				// 向服务器请求游记数据
@@ -145,7 +143,6 @@
 						id:this.placeId
 					}
 				}).then(result=>{
-					// console.log(result.data)
 					this.shopping=result.data;
 					this.$parent.shopping=result.data;
 				})

@@ -130,8 +130,8 @@
 	export default{
 		data(){
 			return{
-				place:this.$route.query.place,
-				placeId:this.$route.params.placeId,
+				place:"",
+				placeId:"",
 				summary:"",
 				jdList:[{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"}],
 				InsideJD:[],
@@ -181,12 +181,13 @@
 					
 				})
 			},
-			getPlaceId(){
+			getPlaceId(place){
+				console.log(`获取placeId启动,此时place为${this.place}`)
 				this.axios.get('/lvyou/place_list',{
 					params:{
 						place:place
 					}
-				}).then(reuslt=>{
+				}).then(result=>{
 					this.placeId=result.data.id
 				})
 			},
@@ -196,12 +197,17 @@
 						id:placeId
 					}
 				}).then(result=>{
-					this.jdList=result.data
-					this.label_JD=this.jdList
+					if(result.data.length!=0){
+						this.jdList=result.data
+						this.label_JD=this.jdList
+					}
 				})
 			},
 			getInsideJD(i,length){
 				if(i<length){
+					if(this.jdList[i]==undefined){
+						return
+					}
 					this.axios.get('/lvyou/jd_list',{
 						params:{
 							jdId:this.jdList[i].id
@@ -217,13 +223,13 @@
 		
 		},
 		mounted(){
-			console.log(this.$route.query)
+			this.placeId=this.$route.params.placeId
 			this.place=this.$route.query.place
-			this.getFamilyID(this.place)
 		},
 		watch:{
 			place(){
 				this.getPlaceId(this.place)
+				this.getFamilyID(this.place)
 			},
 			placeId(){
 				this.getJD(this.placeId)
@@ -241,9 +247,11 @@
 						this.label.push(label[i])
 					}
 				}
-				this.pics=this.jdList[0].pics;
+				if(this.jdList[0]!=undefined){
+					this.pics=this.jdList[0].pics;
+					this.getInsideJD(0,5)
+				}
 				// 获取景点数据后再调用函数获得景点的内部景点数据
-				this.getInsideJD(0,5)
 				
 			},
 		},

@@ -31,7 +31,6 @@
 </template>
 
 <script>
-	// console.log(new Date(t.setMonth(t.getMonth()+1)))
 	export default{
 		data(){
 			return{
@@ -59,6 +58,8 @@
 				let date=new Date(`${arr[0]}/${arr[1]}/${arr[2]}`);
 				// 根据从父组件传递过来的选择，判断使用哪种模式
 				// 如果选择模式为start时
+				console.log(e.target.dataset.date)
+				console.log(this.pattern)
 				if(this.pattern=="start"){
 					// 当选择开始日期等于当前日期或者小于结束日期时
 					if(this.start.toLocaleDateString()==new Date().toLocaleDateString()||date<this.end){
@@ -145,12 +146,13 @@
 		},
 		watch:{
 			start(){
-				console.log(this.$parent.startDate)
 				this.$parent.startDate=this.start
-				console.log(this.$parent.startDate)
 			},
 			end(){
 				this.$parent.endDate=this.end
+			},
+			pattern(){
+				console.log(this.pattern)
 			}
 		},
 		mounted(){

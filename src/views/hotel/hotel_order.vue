@@ -1,6 +1,5 @@
 <template>
 	<div class="hotel_order">
-
 		<!-- 有房保障弹窗 -->
 		<div class="heigh" v-show="house">
 			<div class="heigh_detail">
@@ -280,6 +279,7 @@
 	* {
 		margin: 0;
 		padding: 0;
+		box-sizing: content-box;
 	}
 	.CD{
 		margin-top:10px;
@@ -575,7 +575,7 @@
 	}
 
 	.order_info input {
-		height: 33px;
+		height:23px;
 
 	}
 	input{
@@ -585,7 +585,7 @@
 		background-color: #f9f9f9;
 		padding: 14px;
 		margin-left: 10px;
-		width:625px;
+		width:598px;
 		margin-top: 10px;
 
 
@@ -666,12 +666,12 @@
 		border-radius: 50%;
 		text-align: center;
 		font-weight: bold;
-		margin: 0;
+		margin-right:5px;
 	}
 
 	.num {
 		width: 140px;
-		margin-top:5px;
+		margin-top:8px;
 	}
 
 	.num a {
@@ -709,7 +709,7 @@
 		margin-right: 5px;
 	}
 	.phone input:nth-child(2){
-		width: 280px !important;
+		width: 263px !important;
 	}
 
 	.require {
@@ -767,13 +767,13 @@
 		margin-bottom: 10px;
 	}
 	.times{
-		width:370px;	
+		width:388px;	
 		border: 1px solid #999;
 		margin-top:-10px;
 		border-radius:5px;
 	}
 	.times li{
-		width: 377px;
+		width: 388px;
 		display: block;
 		color: #999;		
 		line-height: 28px;
@@ -783,7 +783,7 @@
 	}
 	.times li:hover{
 		background:#d5d5d5;
-		width:368px;
+		width:388px;
 		color:#666;
 		border-radius:4px;
 	}
@@ -848,7 +848,7 @@
 
 	.rigth_info h4 {
 		color: #333;
-		width: 326px;
+		width:297px;
 		height: 35px;
 		line-height: 35px;
 		padding: 0 15px;
@@ -992,7 +992,7 @@
 		background: #fff;
 		margin-left:10px;
 		margin-right: 10px;
-		padding:0 5px;
+		padding:2px 7px;
 	}
 	.tips_errs {
 		color: #ff584b;

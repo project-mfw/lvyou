@@ -386,7 +386,7 @@
 				this.$refs.destinationNav.place=this.place;
 			},
 			placeId(){
-				this.$refs.mddCrumbNav.placeId=this.placeId
+				this.$refs.mddCrumbNav.placeId=this.placeId;
 				this.$refs.destinationNav.placeId=this.placeId;
 				// 向服务器请求景点信息
 				this.axios.get('/lvyou/jd_list',{

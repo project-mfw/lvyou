@@ -336,7 +336,7 @@
 					result[this.notes.length].place=res.data[0].place
 					this.notes.splice(this.notes.length,1,result[this.notes.length])
 					// 由于服务器请求速度不一致，所以这里使用了递归，直到完整获取所有响应过来的数据后停止
-					if(this.notes.length<10){
+					if(this.notes.length<9){
 						this.addPlace(result)
 					}
 				})

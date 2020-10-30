@@ -1,8 +1,8 @@
 <template>
   <div class="hotel" >
-	  <!-- <div class="_header">
+	  <div class="_header">
 		  <my-header></my-header>
-	  </div> -->
+	  </div>
       <div class="main flex">
 			<!-- 第一部分 -->
 			<div class="one">
@@ -132,7 +132,7 @@
 									<li @click="num(id)" id="qi">{{shu[6]}}</li>
 								</ul>
 							</div>
-							<div class="border cart_two">								
+							<!-- <div class="border cart_two">								
 								<span id="spans">{{shus[1]}}成人</span>
 								<span class="number_bottom"><i @click="four"></i></span>
 								<ul class="seven" v-show="seven_right">
@@ -141,10 +141,10 @@
 									<li  @click="nums(id)" id="sann">{{shus[2]}}</li>
 									<li  @click="nums(id)" id="sii">{{shus[3]}}</li>									
 								</ul>
-							</div>
+							</div> -->
 						</div>												
 						<div class="number_two">
-						<span>请优先选择日期，以便查询实时价格。</span>
+						<!-- <span>请优先选择日期，以便查询实时价格。</span> -->
 						<a class="border" @click="sure">确认</a>
 						</div>
 					</div>
@@ -227,9 +227,9 @@
 						
 			</div>
 	    </div>
-		<!-- <div class="_footer">
+		<div class="_footer">
 			<my-footer></my-footer>
-		</div> -->
+		</div>
   </div>
 </template>
 <style scoped>
@@ -344,7 +344,7 @@
 		padding-left:8px;
 	}
 	.select_number{
-		width:480px;
+		width:230px;
 		height:139px;
 		padding: 0 15px;
 		border: 1px solid #999;
@@ -434,7 +434,7 @@
 		line-height:20px;
 		padding:2px 20px;
 		float:left;
-		margin-left:174px;
+		margin-left:100px;
 		border-radius:4px;
 		background:#ffb200;
 		color: #fff;
@@ -830,7 +830,7 @@ import calendar from '../../components/calendar'
 
 			},
 			seven(){
-				this.seven_left=true
+				this.seven_left=!this.seven_left
 				this.seven_right=false
 				let input=document.getElementsByClassName('number')[0]
 				console.log(input)

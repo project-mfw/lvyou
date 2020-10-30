@@ -93,7 +93,6 @@
 						id:PlaceId
 					}
 				}).then(result=>{
-					console.log(result.data)
 					this.jd_list=result.data
 					let arr=[]
 					for(let i=0;i<result.data.length;i++){
@@ -136,7 +135,6 @@
 			let mk=new BMap.Marker(point)
 			map.addOverlay(mk);
 			mk.onmouseover=function(){
-				console.log(111)
 			}
 		}
 	}

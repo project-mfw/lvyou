@@ -2,9 +2,9 @@
 	<div class="hotel_two">
 		
 		<!-- 页头 -->
-		<!-- <div class="header flex border">
+		<div class="header flex border">
 			<my-header></my-header>
-		</div> -->
+		</div>
 		<!-- 网页主要内容 -->
 			<!-- 搜索区域 -->
 			<div class="top-nav flex">
@@ -185,7 +185,7 @@
 				<div class="b-one flex">
 					<div class="b-left flex">
 						<div class="b-o1">
-							<span>2家酒店</span>
+							<span>{{this.all_hotel.length}}家酒店</span>
 						</div>
 						<div class="b-o2  flex">
 							<span>有房</span>
@@ -307,9 +307,9 @@
 			<a>马蜂窝酒店平台合作伙伴</a>
 		</div>
 		</div>
-		<!-- <div class="_footer">
+		<div class="_footer">
 			<my-footer></my-footer>
-		</div> -->
+		</div>
 	</div>	
 </template>
 <style scoped>
@@ -508,7 +508,7 @@
 	}
 	.china {
 		position: relative;
-		width:80px;		
+		width:95px;		
 	}
 	.country_hotel{
 		position: relative;
@@ -521,7 +521,7 @@
 		margin: 8px 0 0.5px 4px;
 		position:absolute;
 		bottom:5px;
-		left:23px;
+		left:27px;
 	}
 	.biaoo{
 		border-top: 4px solid #ff7000;
@@ -530,7 +530,7 @@
 		margin: 8px 0 0.5px 4px;
 		position:absolute;
 		bottom:5px;
-		left:47px;
+		left:50px;
 	}
 	.ding a {
 		color: #FF9D00;
@@ -1402,6 +1402,7 @@ import little_map from '../../components/little_map.vue'
 			forsearch(){
 				this.axios.get(`/hotel/search/${this.kw}`).then(res=>{										
 					this.results=res.data;
+					console.log(this.results)
 					let fid									
 					this.results.forEach(ele=>{
 						fid=ele.fid;

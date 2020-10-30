@@ -57,7 +57,6 @@
 						id:placeId
 					}
 				}).then(result=>{
-					console.log(result.data)
 					this.shopping=result.data
 				})
 			}

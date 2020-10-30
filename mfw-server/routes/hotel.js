@@ -59,16 +59,18 @@ server.get('/all_hotel',(req,res)=>{
      let page=req.query.page; 
      //开始查询得值
      let offset=(page-1)*pagesize;
-    
-        let sql='select * from all_hotel where fid= ?';
-        pool.query(sql,[obj.id],(err,results)=>{
+     let place=req.query.place;
+    let like='%'+place+'%';
+        let sql='select * from all_hotel where fid= ? or  hotel_name like ?';
+        pool.query(sql,[obj.id,like],(err,results)=>{
             if(err) throw err;
+            console.log(results,11111111)
              //2.计算总页数
     let pagecount=parseInt(Math.ceil((results.length)/pagesize));
            
      
-    let sql='select * from all_hotel where fid=? limit '+ offset+','+pagesize;
-    pool.query(sql,[obj.id],(err,results)=>{
+    let sql='select * from all_hotel where fid=? or hotel_name like ? limit '+ offset+','+pagesize;
+    pool.query(sql,[obj.id,like],(err,results)=>{
         if(err) throw err;
         res.send({message:'查询成功',code:1,results:results,pagecount});   
     })
