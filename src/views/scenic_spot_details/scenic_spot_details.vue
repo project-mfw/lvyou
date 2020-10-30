@@ -139,7 +139,7 @@
 				</div>
 			</div>
 			<!-- 内部景点-->
-			<div class="row sd-inside">
+			<div class="row sd-inside" v-if="JD_include.length!=''">
 				<div class="wrapper">
 					<div class="sd-title">
 						内部景点
@@ -188,21 +188,11 @@
 					</dl>
 				</div>
 			</div>
-			<!-- 附近热门酒店 -->
-			<div class="row sd-hotel" v-show="false">
-				<div class="wrapper">
-					<dl>
-						<dt>附近热门酒店</dt>
-						<dd>
-							位于东京迪士尼度假村区域， <span>8%</span>游客选择住在这里。<br>乐园内的酒店价格比较贵，内部设施都是和迪士尼配套，对孩子具有吸引力。 该区域内的多数酒店都提供免费巴士往返迪士尼，十分方便。</dd>
-					</dl>
-				</div>
-			</div>
 		</div>
 		<div class="addComment" v-if="isOpenComment">
 			<div class="addCommentBox">
 				<span class="close" @click="closeComment"></span>
-				<div class="title">东京迪士尼<span><i class="red">*</i>为必填选项</span></div>
+				<div class="title">{{JD.name}}<span><i class="red">*</i>为必填选项</span></div>
 				<div class="addStar">
 					<div class="left"><i class="red">*</i>总体评价</div>
 					<div class="right">

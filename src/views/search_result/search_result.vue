@@ -58,7 +58,7 @@
 				</div>
 				<div class="sidebar_hotel">
 					<ul>
-						<li class="flex_row" v-for="(t,i) of 5" :key="i"><div class="flex_row"><span>{{t}}</span><router-link to="">东京旅馆</router-link></div><h4 class="seg_price">￥499</h4></li>
+						<li class="flex_row" v-for="(t,i) of hotel" :key="i" v-if="i<5"><div class="flex_row"><span>{{i+1}}</span><router-link to="">{{t.name}}</router-link></div><h4 class="seg_price">￥{{t.price}}</h4></li>
 						
 					</ul>
 				</div>
@@ -93,6 +93,7 @@
 				pic:"",
 				scenicSpot:"",
 				shopping:"",
+				hotel:[],
 				// 选项卡中被选择的选项卡
 				checkedNav:"all"
 			}
@@ -107,7 +108,21 @@
 				this.checkedNav=e.target.dataset.type;
 			}
 		},
+		watch:{
+			placeId(){
+				// 请求酒店信息
+				this.axios.get('/lvyou/hotel',{
+					params:{
+						placeId:this.placeId
+					}
+				}).then(result=>{
+					console.log(result.data)
+					this.hotel=result.data
+				})
+			}
+		},
 		mounted(){
+			
 			// 将地址传递过来的参数请求到服务器，查询对应的目的地信息。
 			this.axios.get(`/lvyou/place_list`,{
 				params:{

@@ -104,6 +104,17 @@ r.get('/line_list',(req,res)=>{
 		res.send(result)
 	})
 })
+// 酒店信息
+r.get('/hotel',(req,res)=>{
+	let obj=req.query;
+	console.log(obj)
+	let sql='select * from lv_hotel where family_id= ?'
+	p.query(sql,[obj.placeId],(err,result)=>{
+		if(err) throw err
+		console.log(result)
+		res.send(result)
+	})
+})
 // 酒店类型分类接口
 r.get('/hotel_type',(req,res)=>{
 	let obj=req.query;

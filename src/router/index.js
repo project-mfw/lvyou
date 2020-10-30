@@ -73,6 +73,7 @@ const routes = [
   // 景点列表页路由配置
   {
 	path:'/jd/:place',
+	name:'jd',
 	component:scenicSpot,
 	props:true
   },

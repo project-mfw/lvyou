@@ -5,7 +5,7 @@
 			<ul class="nav">
 				<li class="overview"><router-link :to="{name:'mddOverview',params:{placeId:this.$parent.placeId},query:{place:this.$parent.place}}"><i class="navbar-overview"></i>概况</router-link></li>
 				<li class="icon"><router-link to=""><i class="navbar-icon"></i>行程路线</router-link></li>
-				<li class="scenic"><router-link :to="`/jd/${place}`"><i class="navbar-scenic"></i>景点</router-link></li>
+				<li class="scenic"><router-link :to="{name:'jd',query:{place:this.$parent.place},params:{placeId:this.$parent.placeId}}"><i class="navbar-scenic"></i>景点</router-link></li>
 				<li class="hotels"><router-link :to="{name:'hotel_two',query:{place:place},params:{id:2}}"><i class="navbar-hotels"></i>酒店</router-link></li>
 				<li class="local"  @mouseenter="enter($event)" @mouseleave="leave($event)" data-name="play">
 					<router-link to="">
@@ -75,7 +75,7 @@
 				</li>
 				
 				
-				<li class="maps"><router-link to=""><i class="navbar-maps"></i>地图</router-link></li>
+				<li class="maps"><router-link :to="{name:'map',params:{id:4},query:{place:this.place}}"><i class="navbar-maps"></i>地图</router-link></li>
 			</ul>
 		</div>
 	</div>
@@ -105,6 +105,7 @@
 		data(){
 			return {
 				place:"",
+				placeId:"",
 				dropMenu:""
 			}
 		},
@@ -115,11 +116,27 @@
 			leave(e){
 				this.dropMenu=""
 			},
+			getPlaceId(place){
+				this.axios.get('/lvyou/place_list',{
+					params:{
+						place:place
+					}
+				}).then(reuslt=>{
+					this.placeId=result.data.id
+					console.log(this.place)
+					console.log(this.placeId)
+				})
+				
+			},
 			
 		},
 		mounted() {
-			this.place=this.$route.path.split("/")[2]
-			
+			this.place=this.$parent.place
+		},
+		watch:{
+			place(){
+				this.getPlaceId(this.place)
+			}
 		}
 	}
 </script>

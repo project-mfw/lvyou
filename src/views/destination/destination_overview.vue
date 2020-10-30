@@ -155,10 +155,13 @@
 		},
 		watch:{
 			placeId(){
+				this.$refs.destinationNav.placeId=this.placeId;
 				this.$refs.mddCrumbNav.placeId=this.placeId;
 				this.getPlaceBaike(this.placeId)
 			},
 			place(){
+				this.$refs.mddCrumbNav.place=this.place;
+				this.$refs.destinationNav.place=this.place;
 				document.title=`【${this.place}概况】${this.place}概况 - 马蜂窝`
 			},
 			index(){

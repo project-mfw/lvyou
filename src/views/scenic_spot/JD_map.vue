@@ -88,7 +88,6 @@
 				map.addOverlay(mk);
 			},
 			getListJD(PlaceId){
-				console.log(this.placeId)
 				this.axios.get('/lvyou/jd_list',{
 					params:{
 						id:PlaceId

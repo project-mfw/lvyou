@@ -130,8 +130,8 @@
 	export default{
 		data(){
 			return{
-				place:this.$route.params.place,
-				placeId:"",
+				place:this.$route.query.place,
+				placeId:this.$route.params.placeId,
 				summary:"",
 				jdList:[{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"},{pic:"",name:"",pics:"|"}],
 				InsideJD:[],
@@ -181,6 +181,15 @@
 					
 				})
 			},
+			getPlaceId(){
+				this.axios.get('/lvyou/place_list',{
+					params:{
+						place:place
+					}
+				}).then(reuslt=>{
+					this.placeId=result.data.id
+				})
+			},
 			getJD(placeId){
 				this.axios.get('/lvyou/jd_list',{
 					params:{
@@ -208,9 +217,14 @@
 		
 		},
 		mounted(){
+			console.log(this.$route.query)
+			this.place=this.$route.query.place
 			this.getFamilyID(this.place)
 		},
 		watch:{
+			place(){
+				this.getPlaceId(this.place)
+			},
 			placeId(){
 				this.getJD(this.placeId)
 				this.$refs.mddCrumbNav.placeId=this.placeId
